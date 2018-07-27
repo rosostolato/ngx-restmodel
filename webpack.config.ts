@@ -11,7 +11,7 @@ export default (environment = 'development') => {
   const { ifProduction, ifDevelopment } = getIfUtils(environment);
 
   return {
-    devtool: ifProduction('source-map', 'eval'),
+    devtool: 'source-map', // ifProduction('source-map', 'eval'),
     entry: path.join(__dirname, 'demo', 'entry.ts'),
     output: {
       filename: ifProduction('[name]-[chunkhash].js', '[name].js')
