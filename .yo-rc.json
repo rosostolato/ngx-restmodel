@@ -1,0 +1,13 @@
+{
+  "generator-angular-library": {
+    "githubUsername": "rosostolato",
+    "githubRepoName": "ngx-restmodel",
+    "npmModuleName": "ngx-restmodel",
+    "ngModuleName": "RestmodelModule",
+    "selectorPrefix": "rest",
+    "projectTitle": "Ngx Restmodel",
+    "projectDescription": "Request from a restful api and link it to a model",
+    "authorName": "rosostolato",
+    "packageManager": "npm"
+  }
+}
