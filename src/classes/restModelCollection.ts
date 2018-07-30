@@ -2,6 +2,12 @@ import { RestBase } from './restBase';
 import { RestRoute } from './restRoute';
 import { RestModel } from './restModel';
 
+interface Route {
+  path: string,
+  id?: number,
+  parent?: Route
+}
+
 // @ts-ignore
 export class RestModelCollection<T> extends Array<RestModel<T> & T> implements RestBase {
   private _route: Route;

@@ -4,15 +4,11 @@ import { RestApi } from '../demo/restApi.service';
 import { expect } from 'chai';
 
 describe('restmodel', () => {
-  let restApi: RestApi;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClient],
       providers: [RestApi]
     });
-
-    restApi = TestBed.get(RestApi);
   });
 
   it('should get login', () => {
@@ -21,6 +17,8 @@ describe('restmodel', () => {
       password: '$admin',
       grant_type: 'password'
     };
+
+    expect(userData)
   });
 
   // it('should say hello world', () => {

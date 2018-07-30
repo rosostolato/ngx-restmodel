@@ -1,5 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 
+interface Route {
+  path: string,
+  id?: number,
+  parent?: Route
+}
+
 export class Base {
   protected _route: Route;
 

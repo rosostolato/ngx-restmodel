@@ -3,6 +3,12 @@ import { applyMixin } from '../utils';
 import { Base } from '../base';
 import { map } from 'rxjs/operators';
 
+interface Route {
+  path: string,
+  id?: number,
+  parent?: Route
+}
+
 export class RestRoute extends Base {
   constructor (private base: any, parentRoute: Route, private path: string) {
     super(base._http);

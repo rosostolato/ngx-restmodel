@@ -1,6 +1,12 @@
 import { applyMixin } from '../utils';
 import { RestBase } from '../index';
 
+interface Route {
+  path: string,
+  id?: number,
+  parent?: Route
+}
+
 export class RestModel<T> extends RestBase {
   id?: number;
 
