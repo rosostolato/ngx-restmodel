@@ -1,17 +1,16 @@
+import { applyMixin } from '../utils';
 import { RestBase } from '../index';
 
 export class RestModel<T> extends RestBase {
   id?: number;
 
-  constructor (base: any, public model: T) {
-    super(base.http);
+  constructor (base: any, _route: Route, model: T) {
+    super(base._http);
 
-    const proto = Object.getPrototypeOf(this);
-    Object.setPrototypeOf(proto, Object.getPrototypeOf(base));
-    Object.assign(this, base);
+    applyMixin(this, [base, model]);
+    Object.assign(this, base, model);
 
-    if (this.id) {
-      this._route.path += '/' + this.id;
-    }
+    this._route = { ..._route };
+    this._base = base;
   }
 }

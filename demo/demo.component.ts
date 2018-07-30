@@ -22,7 +22,6 @@ export class DemoComponent {
     this.restApi.route('users/login')
       .post<UserLogin>(userData)
       .subscribe(obs => {
-        debugger;
       });
   }
 
@@ -30,7 +29,24 @@ export class DemoComponent {
     this.restApi.route('vessels')
       .getList<Vessel>()
       .subscribe(vessels => {
-        debugger;
+        const v = vessels[0];
+
+        vessels[0].route('assets')
+          .getList()
+          .subscribe(assets => {
+          });
+      });
+  }
+
+  private getVessel() {
+    this.restApi
+      .route('vessels')
+      .getOne<Vessel>(1)
+      .subscribe(vessel => {
+        vessel.route('assets')
+          .getList()
+          .subscribe(assets => {
+          });
       });
   }
 }

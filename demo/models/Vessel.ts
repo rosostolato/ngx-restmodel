@@ -31,5 +31,9 @@ export class Vessel implements IVessel {
     if (data) {
       Object.assign(this, data);
     }
+	}
+
+	getAssets() {
+    return this.assets;
   }
 }

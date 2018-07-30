@@ -1,15 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 
 export class Base {
-  protected _route: {
-    path: string,
-    parent: string[],
-  }
+  protected _route: Route;
 
-  constructor (protected http: HttpClient) {
+  constructor (protected _http: HttpClient) {
     this._route = {
-      path: '',
-      parent: []
+      path: ''
     };
   }
 

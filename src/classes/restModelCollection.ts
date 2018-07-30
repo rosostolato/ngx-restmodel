@@ -1,12 +1,25 @@
-import { Base } from '../base';
+import { RestBase } from './restBase';
+import { RestRoute } from './restRoute';
+import { RestModel } from './restModel';
 
-export class RestModelCollection<T> extends Array<T> {
-  constructor (base: any, models: any[]) {
-    super(...models);
+// @ts-ignore
+export class RestModelCollection<T> extends Array<RestModel<T> & T> implements RestBase {
+  private _route: Route;
+  private _base: any;
+
+  constructor (base: any, _route: Route, items: any[]) {
+    super(base._http);
 
     const proto = Object.getPrototypeOf(base);
-    Object.assign(proto, Object.getPrototypeOf(proto));
     Object.setPrototypeOf(proto, Array.prototype);
     Object.setPrototypeOf(this, proto);
+    Object.assign(this, { ...items });
+
+    this._route = { ..._route };
+    this._base = base;
+  }
+
+  route(path: string) {
+    return new RestRoute(this._base, this._route, path);
   }
 }
