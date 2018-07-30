@@ -1,15 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 
 export class Base {
-  constructor (protected http: HttpClient) { }
+  protected _route: {
+    path: string,
+    parent: string[],
+  }
 
-  public getBaseUrl(): string {
+  constructor (protected http: HttpClient) {
+    this._route = {
+      path: '',
+      parent: []
+    };
+  }
+
+  protected getBaseUrl(): string {
     return '';
-  };
+  }
 
-  public getDefaultHeaders() {
+  protected getDefaultHeaders() {
     return {};
-  };
+  }
 
   protected requestInterceptor(req: Request) {
   }

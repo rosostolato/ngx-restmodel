@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RestApi } from './restApi.service';
-import { UserLogin, IUserLogin } from './models/UserLogin';
+import { UserLogin } from './models/UserLogin';
+import { Vessel } from './models/Vessel';
 
 @Component({
   selector: 'rest-demo-app',
@@ -8,15 +9,27 @@ import { UserLogin, IUserLogin } from './models/UserLogin';
 })
 export class DemoComponent {
   constructor (private restApi: RestApi) {
+    this.getVessels();
+  }
+
+  private login() {
     const userData = {
       username: 'admin',
       password: '$admin',
       grant_type: 'password'
     };
 
-    restApi.route('users/login')
+    this.restApi.route('users/login')
       .post<UserLogin>(userData)
       .subscribe(obs => {
+        debugger;
+      });
+  }
+
+  private getVessels() {
+    this.restApi.route('vessels')
+      .getList<Vessel>()
+      .subscribe(vessels => {
         debugger;
       });
   }

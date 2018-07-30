@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Base } from './base';
-import { RestRoute } from './restRoute';
+import { RestRoute } from '../index';
+import { Base } from '../base';
 
 export class RestBase extends Base {
   constructor (http: HttpClient) {
