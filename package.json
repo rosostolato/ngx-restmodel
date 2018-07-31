@@ -1,6 +1,6 @@
 {
   "name": "ngx-restmodel",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Request from a restful api and link it to a model",
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
@@ -121,6 +121,7 @@
   },
   "peerDependencies": {
     "@angular/core": ">=6.0.0",
-    "rxjs": ">=6.0.0"
+    "rxjs": ">=6.0.0",
+    "lodash": ">=4.17.0"
   }
 }
