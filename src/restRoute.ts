@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+// import { cloneDeep } from 'lodash';
 import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,6 +14,27 @@ interface AbstractBase {
   getDefaultHeaders(): any;
   mapModel(path: string, data: any): any;
 }
+
+// not for array
+// function cloneDeepAndUnique(value: any) {
+//   const clone: any = { ...value };
+//   const proto: any = {};
+//   const protos = [];
+
+//   while(value.__proto__) {
+//     protos.push(value.__proto__);
+//     value = value.__proto__;
+//   }
+
+//   const last = protos.pop();
+//   for (const p of protos) {
+//     Object.assign(proto, p);
+//   }
+
+//   Object.setPrototypeOf(clone, proto);
+//   Object.assign(clone, { ...value });
+//   return clone;
+// }
 
 export class RestRoute {
   private http: HttpClient

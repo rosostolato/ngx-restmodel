@@ -384,7 +384,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/restRoute.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/restRoute.ts:40</a></div>
                             </td>
                         </tr>
 
@@ -462,7 +462,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/restRoute.ts:40</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/restRoute.ts:62</a></div>
                             </td>
                         </tr>
 
@@ -508,7 +508,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/restRoute.ts:49</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/restRoute.ts:71</a></div>
                             </td>
                         </tr>
 
@@ -585,7 +585,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/restRoute.ts:58</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/restRoute.ts:80</a></div>
                             </td>
                         </tr>
 
@@ -652,6 +652,7 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
+// import { cloneDeep } from &#x27;lodash&#x27;;
 import { cloneDeep } from &#x27;lodash&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
@@ -666,6 +667,27 @@ interface AbstractBase {
   getDefaultHeaders(): any;
   mapModel(path: string, data: any): any;
 }
+
+// not for array
+// function cloneDeepAndUnique(value: any) {
+//   const clone: any &#x3D; { ...value };
+//   const proto: any &#x3D; {};
+//   const protos &#x3D; [];
+
+//   while(value.__proto__) {
+//     protos.push(value.__proto__);
+//     value &#x3D; value.__proto__;
+//   }
+
+//   const last &#x3D; protos.pop();
+//   for (const p of protos) {
+//     Object.assign(proto, p);
+//   }
+
+//   Object.setPrototypeOf(clone, proto);
+//   Object.assign(clone, { ...value });
+//   return clone;
+// }
 
 export class RestRoute {
   private http: HttpClient

@@ -333,7 +333,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/restModel.ts</code>
+            <code>src/restRoute.ts</code>
         </p>
 
 
@@ -374,7 +374,7 @@
                                     <a href="#getDefaultHeaders">getDefaultHeaders</a>
                                 </li>
                                 <li>
-                                    <a href="#route">route</a>
+                                    <a href="#mapModel">mapModel</a>
                                 </li>
                             </ul>
                         </td>
@@ -410,7 +410,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/restModel.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/restRoute.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -448,7 +448,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/restModel.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/restRoute.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -468,25 +468,25 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="route"></a>
+                        <a name="mapModel"></a>
                         <span class="name">
                             <b>
-                            route
+                            mapModel
                             </b>
-                            <a href="#route"><span class="fa fa-link"></span></a>
+                            <a href="#mapModel"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>route(path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>mapModel(path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/restModel.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/restRoute.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -517,13 +517,25 @@
                                                     
 
                                                 </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                        <td>
+                                                                    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code><a href="../classes/RestRoute.html" target="_self" >RestRoute</a></code>
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
 
                             </div>
                                 <div class="io-description">
@@ -602,9 +614,12 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
+// import { cloneDeep } from &#x27;lodash&#x27;;
+import { cloneDeep } from &#x27;lodash&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
 import { Resource } from &#x27;./types&#x27;;
-import { RestRoute } from &#x27;./restRoute&#x27;;
+import { RestModel, RestModelBase } from &#x27;./restModel&#x27;;
 
 interface AbstractBase {
   http: HttpClient;
@@ -612,70 +627,95 @@ interface AbstractBase {
 
   getBaseUrl(): string;
   getDefaultHeaders(): any;
-  route(path: string): RestRoute;
+  mapModel(path: string, data: any): any;
 }
 
-export type RestModel&lt;T&gt; &#x3D; RestModelBase&lt;T&gt; &amp; T;
+// not for array
+// function cloneDeepAndUnique(value: any) {
+//   const clone: any &#x3D; { ...value };
+//   const proto: any &#x3D; {};
+//   const protos &#x3D; [];
 
-export class RestModelBase&lt;T&gt; {
-  id?: number;
+//   while(value.__proto__) {
+//     protos.push(value.__proto__);
+//     value &#x3D; value.__proto__;
+//   }
 
-  constructor (private _base: AbstractBase, data: T) {
-    const thisProto &#x3D; Object.getPrototypeOf(this);
-    const dataProto &#x3D; Object.getPrototypeOf(data);
-    Object.assign(thisProto, dataProto);
-    Object.setPrototypeOf(this, thisProto);
-    Object.assign(this, data);
+//   const last &#x3D; protos.pop();
+//   for (const p of protos) {
+//     Object.assign(proto, p);
+//   }
+
+//   Object.setPrototypeOf(clone, proto);
+//   Object.assign(clone, { ...value });
+//   return clone;
+// }
+
+export class RestRoute {
+  private http: HttpClient
+
+  constructor (private base: AbstractBase, private path: string) {
+    this.http &#x3D; base.http;
   }
 
-  put(): Observable&lt;any&gt; {
+  private makeRest&lt;T&gt;(data: any): RestModel&lt;T&gt; {
+    const model &#x3D; this.mapModel(this.path, data);
+    const baseClone &#x3D; cloneDeep(this.base);
+
+    baseClone.http &#x3D; this.http;
+
+    const resource: Resource &#x3D; {
+      id: data.id,
+      path: this.path,
+      parent: baseClone.resource
+    };
+
+    baseClone.resource &#x3D; resource;
+    return new RestModelBase&lt;T&gt;(baseClone as any, model) as any;
+  }
+
+  getList&lt;T&gt;(): Observable&lt;Array&lt;RestModel&lt;T&gt;&gt;&gt; {
     const headers &#x3D; this.getDefaultHeaders();
     const url &#x3D; this.getFullPath();
 
-    return this._base.http.put(url, {headers}, this.getPlain());
+    return this.http.get(url, {headers}).pipe(
+      map((response: any[]) &#x3D;&gt; response.map(r &#x3D;&gt; this.makeRest&lt;T&gt;(r)))
+    );
   }
 
-  delete(): Observable&lt;any&gt; {
+  getOne&lt;T&gt;(id: number): Observable&lt;RestModel&lt;T&gt;&gt; {
+    const headers &#x3D; this.getDefaultHeaders();
+    const url &#x3D; this.getFullPath(id);
+
+    return this.http.get(url, {headers}).pipe(
+      map(response &#x3D;&gt; this.makeRest&lt;T&gt;(response))
+    );
+  }
+
+  post&lt;T&gt;(data: any): Observable&lt;RestModel&lt;T&gt;&gt; {
     const headers &#x3D; this.getDefaultHeaders();
     const url &#x3D; this.getFullPath();
 
-    return this._base.http.put(url, {headers}, this.getPlain());
+    return this.http.post(url, {headers}, data).pipe(
+      map(response &#x3D;&gt; this.makeRest&lt;T&gt;(response))
+    );
   }
 
-  getPlain(): T {
-    const plain: any &#x3D; {};
-    Object.assign(plain, this);
-    delete plain._base;
+  // private makeRestCollection&lt;T&gt;(data: any[]) {
+  //   const models &#x3D; data.map(d &#x3D;&gt; this.makeRest&lt;T&gt;(d));
+  //   const route &#x3D; { ...this._route };
+  //   return new RestModelCollection&lt;T&gt;(this.base, route, models);
+  // }
 
-    const proto &#x3D; { ...Object.getPrototypeOf(this) };
-    const methods &#x3D; [
-      &#x27;delete&#x27;,
-      &#x27;getBaseUrl&#x27;,
-      &#x27;getDefaultHeaders&#x27;,
-      &#x27;getFullPath&#x27;,
-      &#x27;getPlain&#x27;,
-      &#x27;put&#x27;,
-      &#x27;route&#x27;
-    ];
-
-    for (const key of methods) {
-      if (key) { delete proto[key]; }
-    }
-
-    Object.setPrototypeOf(plain, proto);
-    return plain;
-  }
-
-  private getFullPath() {
+  private getFullPath(id?: number) {
     let parentUrl &#x3D; &#x27;/&#x27;;
-    addRoute(this._base.resource);
+    addRoute(this.base.resource);
 
     function addRoute(route?: Resource) {
       if (route) {
         if (route.id) {
           parentUrl &#x3D; &#x27;/&#x27; + route.id + parentUrl;
         }
-
         parentUrl &#x3D; &#x27;/&#x27; + route.path + parentUrl;
 
         if (route.parent) {
@@ -684,27 +724,27 @@ export class RestModelBase&lt;T&gt; {
       }
     }
 
+    // fix baseurl
     let baseurl &#x3D; this.getBaseUrl();
     if (baseurl.charAt(baseurl.length - 1) &#x3D;&#x3D;&#x3D; &#x27;/&#x27;) {
       baseurl &#x3D; baseurl.slice(0, -1);
     }
 
-    const url &#x3D; baseurl + parentUrl
-    return url.slice(0, url.length-1);
+    return baseurl + parentUrl + this.path + (id ?  &#x27;/&#x27; + id : &#x27;&#x27;);
   }
 
   // Base
 
   private getBaseUrl(): string {
-    return this._base.getBaseUrl();
+    return this.base.getBaseUrl();
   }
 
   private getDefaultHeaders(): any {
-    return this._base.getDefaultHeaders();
+    return this.base.getDefaultHeaders();
   }
 
-  route(path: string): RestRoute {
-    return this._base.route(path);
+  private mapModel(path: string, data: any): any {
+    return this.base.mapModel(path, data);
   }
 }
 </code></pre>

@@ -41,6 +41,12 @@ export class DemoComponent {
       .getList<Post>()
       .subscribe(posts => {
         this.posts = posts.map(p => p.getPlain());
+
+        posts[0].route('comments')
+          .getList()
+          .subscribe(comments => {
+            debugger;
+          });
       });
   }
 }
