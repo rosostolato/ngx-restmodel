@@ -1,9 +1,11 @@
 import { RestBase, Restful } from '../src/index';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
+import { Post } from './models/Post';
 
 @Injectable()
 @Restful({
+  baseUrl: 'https://jsonplaceholder.typicode.com'
 })
 export class RestApi extends RestBase {
   constructor (http: HttpClient) {
@@ -11,13 +13,9 @@ export class RestApi extends RestBase {
   }
 
   protected mapModel(route: string, data: any) {
-    // if (route === 'users/login') {
-    //   return new UserLogin(data);
-    // }
-
-    // if (route === 'vessels') {
-    //   return new Vessel(data);
-    // }
+    if (route === 'posts') {
+      return new Post(data);
+    }
 
     return data;
   }

@@ -1,5 +1,4 @@
 import { RestBase } from './restBase';
-import { RestRoute } from './restRoute';
 import { RestModel } from './restModel';
 
 interface Route {
@@ -18,6 +17,7 @@ export class RestModelCollection<T> extends Array<RestModel<T> & T> implements R
 
     const proto = Object.getPrototypeOf(base);
     Object.setPrototypeOf(proto, Array.prototype);
+    Object.assign(proto, RestModelCollection.prototype);
     Object.setPrototypeOf(this, proto);
     Object.assign(this, { ...items });
 
@@ -25,7 +25,8 @@ export class RestModelCollection<T> extends Array<RestModel<T> & T> implements R
     this._base = base;
   }
 
-  route(path: string) {
-    return new RestRoute(this._base, this._route, path);
+  getPlain() {
+    const items = this.map(m => m.getPlain());
+    return Array<T>(...items);
   }
 }
