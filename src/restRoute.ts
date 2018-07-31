@@ -39,26 +39,27 @@ export class RestRoute {
 
   getList<T>(): Observable<Array<RestModel<T>>> {
     const headers = this.getDefaultHeaders();
-    return this.http
-      .get(this.getFullPath(), { headers })
-      .pipe(
-        map((response: any[]) => response.map(r => this.makeRest<T>(r)))
-      );
+    const url = this.getFullPath();
+
+    return this.http.get(url, {headers}).pipe(
+      map((response: any[]) => response.map(r => this.makeRest<T>(r)))
+    );
   }
 
   getOne<T>(id: number): Observable<RestModel<T>> {
     const headers = this.getDefaultHeaders();
     const url = this.getFullPath(id);
 
-    return this.http.get(url, {headers})
-      .pipe<RestModel<T>>(
-        map(response => this.makeRest<T>(response))
-      );
+    return this.http.get(url, {headers}).pipe(
+      map(response => this.makeRest<T>(response))
+    );
   }
 
   post<T>(data: any): Observable<RestModel<T>> {
     const headers = this.getDefaultHeaders();
-    return this.http.post(this.getFullPath(), { headers }, data).pipe<RestModel<T>>(
+    const url = this.getFullPath();
+
+    return this.http.post(url, {headers}, data).pipe(
       map(response => this.makeRest<T>(response))
     );
   }

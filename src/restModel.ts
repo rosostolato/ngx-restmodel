@@ -25,36 +25,40 @@ export class RestModel<T> {
 
   put(): Observable<any> {
     const headers = this.getDefaultHeaders();
-    return this._base.http
-      .put(this.getFullPath(), { headers }, this.getPlain());
+    const url = this.getFullPath();
+
+    return this._base.http.put(url, {headers}, this.getPlain());
   }
 
   delete(): Observable<any> {
     const headers = this.getDefaultHeaders();
-    return this._base.http
-      .put(this.getFullPath(), { headers }, this.getPlain());
+    const url = this.getFullPath();
+
+    return this._base.http.put(url, {headers}, this.getPlain());
   }
 
-  getPlain() {
+  getPlain(): T {
     const plain: any = {};
-    const _this: any = {};
-    Object.assign(_this, this);
+    Object.assign(plain, this);
+    delete plain._base;
 
-    for (const key in _this) {
-      if (key.charAt(0) !== '_') {
-        plain[key] = _this[key];
-      }
-    }
+    const proto = { ...Object.getPrototypeOf(this) };
+    const methods = [
+      'delete',
+      'getBaseUrl',
+      'getDefaultHeaders',
+      'getFullPath',
+      'getPlain',
+      'put',
+      'route'
+    ];
 
-    const proto: any = {...Object.getPrototypeOf(this)};
-    for (const key in RestModel.prototype) {
-      if (key) {
-        delete proto[key];
-      }
+    for (const key of methods) {
+      if (key) { delete proto[key]; }
     }
 
     Object.setPrototypeOf(plain, proto);
-    return plain as T;
+    return plain;
   }
 
   private getFullPath() {
@@ -66,6 +70,7 @@ export class RestModel<T> {
         if (route.id) {
           parentUrl = '/' + route.id + parentUrl;
         }
+
         parentUrl = '/' + route.path + parentUrl;
 
         if (route.parent) {
@@ -74,16 +79,13 @@ export class RestModel<T> {
       }
     }
 
-    // fix baseurl
     let baseurl = this.getBaseUrl();
     if (baseurl.charAt(baseurl.length - 1) === '/') {
       baseurl = baseurl.slice(0, -1);
     }
 
-    return baseurl + parentUrl
-      + this._base.resource.path
-      + (this._base.resource.id ? '/'
-      + this._base.resource.id : '');
+    const url = baseurl + parentUrl
+    return url.slice(0, url.length-1);
   }
 
   // Base
@@ -97,7 +99,6 @@ export class RestModel<T> {
   }
 
   route(path: string): RestRoute {
-    debugger;
     return this._base.route(path);
   }
 }
