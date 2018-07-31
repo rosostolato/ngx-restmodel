@@ -4,6 +4,8 @@
     "directive-selector": [true, "attribute", "rest", "camelCase"],
     "component-selector": [true, "element", "rest", "kebab-case"],
     "pipe-naming": [true, "camelCase", "rest"],
-    "no-inferrable-types": false
+    "no-inferrable-types": false,
+    "interface-name": false,
+    "import-blacklist": false
   }
 }
