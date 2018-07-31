@@ -40,9 +40,7 @@ export class DemoComponent {
       .route('posts')
       .getList<Post>()
       .subscribe(posts => {
-        debugger;
         this.posts = posts.map(p => p.getPlain());
-        debugger;
       });
   }
 }
