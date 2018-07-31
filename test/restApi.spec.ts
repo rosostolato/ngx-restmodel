@@ -19,20 +19,20 @@ describe('RestBase extend', () => {
     expect(restApi).to.be.equal(service);
   }));
 
-  it('should have prototypes', () => {
-    const proto = Object.getPrototypeOf(restApi);
-    const protoKeys = Object.getOwnPropertyNames(proto);
-    const expected = [
-      'constructor',
-      'getBaseUrl',
-      'getDefaultHeaders',
-      'requestInterceptor',
-      'mapModel',
-      'route'
-    ];
+  // it('should have prototypes', () => {
+  //   const proto = Object.getPrototypeOf(restApi);
+  //   const protoKeys = Object.getOwnPropertyNames(proto);
+  //   const expected = [
+  //     'constructor',
+  //     'getBaseUrl',
+  //     'getDefaultHeaders',
+  //     'requestInterceptor',
+  //     'mapModel',
+  //     'route'
+  //   ];
 
-    expect(protoKeys).to.include.members(expected);
-  });
+  //   expect(protoKeys).to.include.members(expected);
+  // });
 
   it('should get URL base', () => {
     const url = restApi.getBaseUrl();

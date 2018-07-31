@@ -5,19 +5,19 @@ export class RestBase {
   constructor (protected http: HttpClient) {
   }
 
-  protected getBaseUrl() {
-    return '';
-  }
-
-  protected getDefaultHeaders() {
-    return {};
-  }
-
   protected requestInterceptor(req: Request) {
   }
 
   protected mapModel(path: string, data: any) {
     return data;
+  }
+
+  getBaseUrl() {
+    return '';
+  }
+
+  getDefaultHeaders() {
+    return {};
   }
 
   route(path: string) {
