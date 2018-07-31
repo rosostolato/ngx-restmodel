@@ -7,7 +7,12 @@ import { map } from 'rxjs/operators';
 export class RestRoute extends Base {
   constructor (private base: any, parentRoute: Route, private path: string) {
     super(base._http);
+
     applyMixin(this, [base]);
+    const proto = Object.getPrototypeOf(this);
+    delete proto.route; // remove route
+    Object.setPrototypeOf(this, proto);
+
     const parent = parentRoute;
     this._route = { path, parent };
   }
@@ -47,7 +52,7 @@ export class RestRoute extends Base {
   }
 
   private getFullPath(id?: number) {
-    let parentUrl = '';
+    let parentUrl = '/';
     let currentRoute = this._route;
 
     while(currentRoute.parent) {
@@ -64,9 +69,12 @@ export class RestRoute extends Base {
       }
     }
 
-    return this.getBaseUrl() + '/'
-      + (parentUrl !== '' ? parentUrl + '/': '')
-      + this._route.path + '/'
-      + (id ? id : '');
+    // fix baseurl
+    let baseurl = this.getBaseUrl();
+    if (baseurl.charAt(baseurl.length - 1) === '/') {
+      baseurl = baseurl.slice(0, -1);
+    }
+
+    return baseurl + parentUrl +  this._route.path + (id ?  '/' + id : '');
   }
 }

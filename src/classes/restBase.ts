@@ -15,4 +15,8 @@ export class RestBase extends Base {
   route(path: string) {
     return new RestRoute(this._base, this._route, path);
   }
+
+  getBaseUrl() {
+    return '';
+  }
 }

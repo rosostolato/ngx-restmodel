@@ -40,6 +40,9 @@ export class DemoComponent {
       .getList<Post>()
       .subscribe(posts => {
         this.posts = posts.getPlain();
+
+        const post = posts[0];
+        this.restApi.route('posts').post(post);
       });
   }
 }
