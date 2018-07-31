@@ -12,7 +12,9 @@ interface AbstractBase {
   route(path: string): RestRoute;
 }
 
-export class RestModel<T> {
+export type RestModel<T> = RestModelBase<T> & T;
+
+export class RestModelBase<T> {
   id?: number;
 
   constructor (private _base: AbstractBase, data: T) {

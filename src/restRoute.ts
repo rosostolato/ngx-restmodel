@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RestModel } from './restModel';
 import { Resource } from './types';
+import { RestModel, RestModelBase } from './restModel';
 
 interface AbstractBase {
   http: HttpClient;
@@ -21,7 +21,7 @@ export class RestRoute {
     this.http = base.http;
   }
 
-  private makeRest<T>(data: any) {
+  private makeRest<T>(data: any): RestModel<T> {
     const model = this.mapModel(this.path, data);
     const baseClone = cloneDeep(this.base);
 
@@ -34,7 +34,7 @@ export class RestRoute {
     };
 
     baseClone.resource = resource;
-    return new RestModel<T>(baseClone as any, model);
+    return new RestModelBase<T>(baseClone as any, model) as any;
   }
 
   getList<T>(): Observable<Array<RestModel<T>>> {

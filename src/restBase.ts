@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { RestRoute } from './restRoute';
-import { cloneDeep } from 'lodash';
 
 export class RestBase {
   constructor (protected http: HttpClient) {
