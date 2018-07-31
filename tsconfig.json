@@ -14,8 +14,7 @@
   "include": [
     "src",
     "test",
-    "demo",
-    "custom-typings.d.ts"
+    "demo"
   ],
   "exclude": [
     "node_modules"

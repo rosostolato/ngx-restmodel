@@ -40,8 +40,6 @@ export class DemoComponent {
       .getList<Post>()
       .subscribe(posts => {
         this.posts = posts.getPlain();
-
-        posts[0].put();
       });
   }
 }

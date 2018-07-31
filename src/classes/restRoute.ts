@@ -1,13 +1,8 @@
 import { RestModel, RestModelCollection } from '../index';
 import { applyMixin } from '../utils';
-import { Base } from '../base';
+import { Base, Route } from '../base';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-interface Route {
-  path: string,
-  id?: number,
-  parent?: Route
-}
 
 export class RestRoute extends Base {
   constructor (private base: any, parentRoute: Route, private path: string) {
@@ -17,23 +12,23 @@ export class RestRoute extends Base {
     this._route = { path, parent };
   }
 
-  getList<T>() {
+  getList<T>(): Observable<RestModelCollection<T>> {
     const headers = this.getDefaultHeaders();
     return this._http.get(this.getFullPath(), { headers }).pipe<RestModelCollection<T>>(
       map((response: any[]) => this.makeRestCollection<T>(response))
     );
   }
 
-  getOne<T>(id: number) {
+  getOne<T>(id: number): Observable<RestModel<T> & T> {
     const headers = this.getDefaultHeaders();
     return this._http.get(this.getFullPath(id), { headers }).pipe<RestModel<T> & T>(
       map(response => this.makeRest<T>(response))
     );
   }
 
-  post<T>(data: any) {
+  post<T>(data: any): Observable<RestModel<T> & T> {
     const headers = this.getDefaultHeaders();
-    return this._http.post(this.getFullPath(), { headers }, data).pipe<RestModel<T>>(
+    return this._http.post(this.getFullPath(), { headers }, data).pipe<RestModel<T> & T>(
       map(response => this.makeRest<T>(response))
     );
   }

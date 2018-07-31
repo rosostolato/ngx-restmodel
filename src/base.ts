@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 
-interface Route {
+export interface Route {
   path: string,
   id?: number,
   parent?: Route

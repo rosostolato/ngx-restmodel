@@ -1,11 +1,7 @@
+import { Observable } from 'rxjs';
 import { applyMixin } from '../utils';
 import { RestBase } from '../index';
-
-interface Route {
-  path: string,
-  id?: number,
-  parent?: Route
-}
+import { Route } from '../base';
 
 export class RestModel<T> extends RestBase {
   id?: number;
@@ -20,12 +16,12 @@ export class RestModel<T> extends RestBase {
     this._base = base;
   }
 
-  put() {
+  put(): Observable<any> {
     const headers = this.getDefaultHeaders();
     return this._http.put(this.getFullPath(), { headers }, this.getPlain());
   }
 
-  delete() {
+  delete(): Observable<any> {
     const headers = this.getDefaultHeaders();
     return this._http.put(this.getFullPath(), { headers }, this.getPlain());
   }
