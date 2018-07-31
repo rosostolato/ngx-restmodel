@@ -4,7 +4,6 @@ import { RestApi } from '../demo/restApi.service';
 import { expect } from 'chai';
 import { RestRoute } from '../src';
 import { Post } from '../demo/models/Post';
-import { Route } from '../src/base';
 
 describe('RestRoute', () => {
   let route: RestRoute;
