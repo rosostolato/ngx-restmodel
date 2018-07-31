@@ -32,7 +32,8 @@ export class RestRoute extends Base {
   }
 
   post<T>(data: any) {
-    return this._http.post(this.getFullPath(), data).pipe<RestModel<T>>(
+    const headers = this.getDefaultHeaders();
+    return this._http.post(this.getFullPath(), { headers }, data).pipe<RestModel<T>>(
       map(response => this.makeRest<T>(response))
     );
   }

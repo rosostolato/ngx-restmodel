@@ -38,8 +38,10 @@ export class DemoComponent {
   GetPosts() {
     this.restApi.route('posts')
       .getList<Post>()
-      .subscribe(response => {
-        this.posts = response.getPlain();
+      .subscribe(posts => {
+        this.posts = posts.getPlain();
+
+        posts[0].put();
       });
   }
 }

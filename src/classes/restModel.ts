@@ -20,6 +20,16 @@ export class RestModel<T> extends RestBase {
     this._base = base;
   }
 
+  put() {
+    const headers = this.getDefaultHeaders();
+    return this._http.put(this.getFullPath(), { headers }, this.getPlain());
+  }
+
+  delete() {
+    const headers = this.getDefaultHeaders();
+    return this._http.put(this.getFullPath(), { headers }, this.getPlain());
+  }
+
   getPlain() {
     const plain: any = {};
     const _this: any = {};
@@ -40,5 +50,29 @@ export class RestModel<T> extends RestBase {
 
     Object.setPrototypeOf(plain, proto);
     return plain as T;
+  }
+
+  private getFullPath() {
+    let parentUrl = '';
+    let currentRoute = this._route;
+
+    while(currentRoute.parent) {
+      addParent(currentRoute.parent);
+      currentRoute = currentRoute.parent;
+    }
+
+    function addParent(parent: Route) {
+      if (parent.path !== '') {
+        if (parent.id) {
+          parentUrl = '/' + parent.id + parentUrl;
+        }
+        parentUrl = '/' + parent.path + parentUrl;
+      }
+    }
+
+    return this.getBaseUrl() + '/'
+      + (parentUrl !== '' ? parentUrl + '/': '')
+      + this._route.path + '/'
+      + this.id;
   }
 }

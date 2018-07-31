@@ -19,13 +19,14 @@ https://rosostolato.github.io/ngx-restmodel/ <i>not implemented yet</i>
 - [License](#license)
 
 ## About
+[!Highly Experimental - still on developing]
 
 Request from a restful api and link it to a model.
 
 I am a fun of Restangular but I've got desapointed with the version of Angular 2+. But since on AngularJs, I wish Restangular could bind them methods on prototype and not inside its body. So I tried to create this lib.
 
 It's very experimental and maybe not correctly implemented, but I'm still developing the Idea.
-If you want to contribute, please send me e-mail (I need help).
+If you liked the idea and want to contribute, please send me an e-mail (I need help).
 
 ## Installation
 
