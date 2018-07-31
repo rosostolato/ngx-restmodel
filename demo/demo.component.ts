@@ -36,13 +36,15 @@ export class DemoComponent {
   }
 
   GetPosts() {
-    this.restApi.route('posts')
-      .getList<Post>()
-      .subscribe(posts => {
-        this.posts = posts.getPlain();
-
-        const post = posts[0];
-        this.restApi.route('posts').post(post);
+    const route = this.restApi
+      .route('posts')
+      .getOne<Post>(1)
+      .subscribe(post => {
+        post.route('comments')
+          .getOne(1)
+          .subscribe(com => {
+            debugger;
+          })
       });
   }
 }
