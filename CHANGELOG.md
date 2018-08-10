@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/rosostolato/ngx-restmodel/compare/v0.0.6...v0.0.7) (2018-08-10)
+
+
+### Bug Fixes
+
+* **readme:** Now all demo links are working ([6188851](https://github.com/rosostolato/ngx-restmodel/commit/6188851))
+
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/rosostolato/ngx-restmodel/compare/v0.0.4...v0.0.6) (2018-08-10)
 

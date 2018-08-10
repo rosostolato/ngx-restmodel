@@ -8,7 +8,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/rosostolato/ngx-restmodel/master/LICENSE)
 
 ## Demo
-https://rosostolato.github.io/ngx-restmodel/ <i>not implemented yet</i>
+https://rosostolato.github.io/ngx-restmodel/
 
 ## Table of contents
 
@@ -19,14 +19,14 @@ https://rosostolato.github.io/ngx-restmodel/ <i>not implemented yet</i>
 - [License](#license)
 
 ## About
-[!Highly Experimental - still on developing]
+[!Highly Experimental - still in development]
 
 Request from a restful api and link it to a model.
 
-I am a fun of Restangular but I've got desapointed with the version of Angular 2+. But since on AngularJs, I wish Restangular could bind them methods on prototype and not inside its body. So I tried to create this lib.
+I am a fun of Restangular but I've got desapointed with the version of Angular 2+. But since AngularJs, I wish Restangular could bind them methods on prototype and not inside its body. So the idea of this lib was born.
 
-It's very experimental and maybe not correctly implemented, but I'm still developing the Idea.
-If you liked the idea and want to contribute, please send me an e-mail (I need help).
+It's very experimental and maybe not correctly implemented, but I'm still developing the framework.
+If you liked the idea and want to contribute, please send me an e-mail. Your help is welcome!
 
 ## Installation
 
@@ -64,6 +64,7 @@ export class RestApi extends RestBase {
 ```
 
 Finally use in one of your apps components:
+
 ```typescript
 import { Component } from '@angular/core';
 import { RestApi } from './restApi.service';
@@ -98,11 +99,11 @@ export class DemoComponent {
 }
 ```
 
-You may also find it useful to view the [demo source](https://github.com/rosostolato/ngx-restmodel/blob/master/demo/demo.component.ts). <i>not implemented yet</i>
+You may also find it useful to view the [demo source](https://github.com/rosostolato/ngx-restmodel/blob/master/demo/demo.component.ts).
 
 ## Documentation
 All documentation is auto-generated from the source via [compodoc](https://compodoc.github.io/compodoc/) and can be viewed here:
-https://rosostolato.github.io/ngx-restmodel/docs/ <i>not implemented yet</i>
+https://rosostolato.github.io/ngx-restmodel/docs/
 
 ## Development
 
