@@ -1,6 +1,6 @@
 {
   "name": "ngx-restmodel",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Request from a restful api and link it to a model",
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
@@ -25,7 +25,10 @@
   },
   "ngPackage": {
     "lib": {
-      "entryFile": "src/index.ts"
+      "entryFile": "src/index.ts",
+      "externals": {
+        "lodash": "./node_modules/lodash/index.js"
+      }
     }
   },
   "lint-staged": {
@@ -73,6 +76,8 @@
     "@ngtools/webpack": "^1.10.2",
     "@types/chai": "^4.0.0",
     "@types/html-webpack-plugin": "^2.30.4",
+    "@types/lodash": "^4.14.115",
+    "@types/lodash.clonedeep": "^4.5.4",
     "@types/mocha": "^2.2.48",
     "@types/node": "^8.10.21",
     "@types/sinon": "^4.3.3",
@@ -98,6 +103,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.13",
     "lint-staged": "^6.1.1",
+    "lodash": "^4.17.10",
     "mocha": "^4.1.0",
     "ng-packagr": "2.0.0-rc.7",
     "offline-plugin": "^4.8.3",
@@ -117,7 +123,8 @@
     "webpack-dev-server": "^2.11.2",
     "zone.js": "^0.8.26"
   },
-  "peerDependencies": {
-    "@angular/core": ">=5.0.0 <6.0.0"
+  "dependencies": {
+    "rxjs": ">=6.0.0",
+    "lodash": ">=4.17.0"
   }
 }

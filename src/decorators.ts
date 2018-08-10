@@ -1,4 +1,9 @@
-export function Restful( args: { baseUrl?: string, headers?: any } ) {
+export interface RestfulOptions {
+  baseUrl?: string,
+  headers?: any
+}
+
+export function Restful( args: RestfulOptions ) {
   return (Target: any): any => {
     if (args.baseUrl) {
       Target.prototype.getBaseUrl = () => {

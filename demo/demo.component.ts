@@ -36,10 +36,17 @@ export class DemoComponent {
   }
 
   GetPosts() {
-    this.restApi.route('posts')
+    const route = this.restApi
+      .route('posts')
       .getList<Post>()
       .subscribe(posts => {
-        this.posts = posts.getPlain();
+        this.posts = posts.map(p => p.getPlain());
+
+        posts[0].route('comments')
+          .getList()
+          .subscribe(comments => {
+            debugger;
+          });
       });
   }
 }
