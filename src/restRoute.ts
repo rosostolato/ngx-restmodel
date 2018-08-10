@@ -1,53 +1,45 @@
-import { HttpClient } from '@angular/common/http';
-// import { cloneDeep } from 'lodash';
+import { HttpRequest, HttpParams, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { Resource, IAbstractBase } from './types';
+import { RestModel, RestModelBase } from './restModel';
 import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Resource } from './types';
-import { RestModel, RestModelBase } from './restModel';
-
-interface AbstractBase {
-  http: HttpClient;
-  resource: Resource;
-
-  getBaseUrl(): string;
-  getDefaultHeaders(): any;
-  mapModel(path: string, data: any): any;
-}
-
-// not for array
-// function cloneDeepAndUnique(value: any) {
-//   const clone: any = { ...value };
-//   const proto: any = {};
-//   const protos = [];
-
-//   while(value.__proto__) {
-//     protos.push(value.__proto__);
-//     value = value.__proto__;
-//   }
-
-//   const last = protos.pop();
-//   for (const p of protos) {
-//     Object.assign(proto, p);
-//   }
-
-//   Object.setPrototypeOf(clone, proto);
-//   Object.assign(clone, { ...value });
-//   return clone;
-// }
 
 export class RestRoute {
-  private http: HttpClient
+  constructor (private base: IAbstractBase, private path: string) {
+  }
 
-  constructor (private base: AbstractBase, private path: string) {
-    this.http = base.http;
+  private createHttpRequest(method: 'GET'|'POST', params?: HttpParams, idOrData?: any) {
+    const url = this.getFullPath(method === 'GET' ? idOrData : null);
+    const headers = new HttpHeaders(this.getDefaultHeaders());
+
+    const req = new HttpRequest(method, url,
+      method === 'POST' ? idOrData : null);
+
+    // pass through request interceptor
+    this.base.requestInterceptor(req);
+
+    // the observable to return
+    const requestObservable = this.base.http.request(req);
+
+    const observable = new Observable<any>(observer => {
+      // pass through response interceptor
+      this.base.FullResponseInterceptor(requestObservable)
+        .subscribe(response => {
+          if (response.type === HttpEventType.Response) {
+            observer.next(response.body);
+          }
+        });
+    });
+
+    return observable;
   }
 
   private makeRest<T>(data: any): RestModel<T> {
     const model = this.mapModel(this.path, data);
     const baseClone = cloneDeep(this.base);
 
-    baseClone.http = this.http;
+    baseClone.http = this.base.http;
 
     const resource: Resource = {
       id: data.id,
@@ -59,38 +51,20 @@ export class RestRoute {
     return new RestModelBase<T>(baseClone as any, model) as any;
   }
 
-  getList<T>(): Observable<Array<RestModel<T>>> {
-    const headers = this.getDefaultHeaders();
-    const url = this.getFullPath();
-
-    return this.http.get(url, {headers}).pipe(
-      map((response: any[]) => response.map(r => this.makeRest<T>(r)))
-    );
+  getList<T>(params?: HttpParams | undefined): Observable<Array<RestModel<T>>> {
+    return this.createHttpRequest('GET', params)
+      .pipe(map((response: any[]) => response.map(r => this.makeRest<T>(r))));
   }
 
-  getOne<T>(id: number): Observable<RestModel<T>> {
-    const headers = this.getDefaultHeaders();
-    const url = this.getFullPath(id);
-
-    return this.http.get(url, {headers}).pipe(
-      map(response => this.makeRest<T>(response))
-    );
+  getOne<T>(id: number, params?: HttpParams | undefined): Observable<RestModel<T>> {
+    return this.createHttpRequest('GET', params, id)
+      .pipe(map(response => this.makeRest<T>(response)));
   }
 
-  post<T>(data: any): Observable<RestModel<T>> {
-    const headers = this.getDefaultHeaders();
-    const url = this.getFullPath();
-
-    return this.http.post(url, data, {headers}).pipe(
-      map(response => this.makeRest<T>(response))
-    );
+  post<T>(data: any, params?: HttpParams | undefined): Observable<RestModel<T>> {
+    return this.createHttpRequest('POST', params, data)
+      .pipe(map(response => this.makeRest<T>(response)));
   }
-
-  // private makeRestCollection<T>(data: any[]) {
-  //   const models = data.map(d => this.makeRest<T>(d));
-  //   const route = { ...this._route };
-  //   return new RestModelCollection<T>(this.base, route, models);
-  // }
 
   private getFullPath(id?: number) {
     let parentUrl = '/';

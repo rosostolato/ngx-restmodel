@@ -1,23 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest, HttpEventType } from '@angular/common/http';
+import { IAbstractBase } from './types';
 import { Observable } from 'rxjs';
 import { Resource } from './types';
 import { RestRoute } from './restRoute';
-
-interface AbstractBase {
-  http: HttpClient;
-  resource: Resource;
-
-  getBaseUrl(): string;
-  getDefaultHeaders(): any;
-  route(path: string): RestRoute;
-}
 
 export type RestModel<T> = RestModelBase<T> & T;
 
 export class RestModelBase<T> {
   id: number;
 
-  constructor (private _base: AbstractBase, data: T) {
+  constructor (private _base: IAbstractBase, data: T) {
     const thisProto = Object.getPrototypeOf(this);
     const dataProto = Object.getPrototypeOf(data);
     Object.assign(thisProto, dataProto);
@@ -25,18 +17,40 @@ export class RestModelBase<T> {
     Object.assign(this, data);
   }
 
-  put(): Observable<any> {
-    const headers = this.getDefaultHeaders();
+  private createHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
+    const headers = new HttpHeaders(this.getDefaultHeaders());
     const url = this.getFullPath();
 
-    return this._base.http.put(url, this.getPlain(), {headers});
+    const req = new HttpRequest(
+      method,url, data, {
+      headers, params
+    });
+
+    // pass through request interceptor
+    this._base.requestInterceptor(req);
+
+    // the observable to return
+    const requestObservable = this._base.http.request(req);
+
+    const observable = new Observable<any>(observer => {
+      // pass through response interceptor
+      this._base.FullResponseInterceptor(requestObservable)
+        .subscribe(response => {
+          if (response.type === HttpEventType.Response) {
+            observer.next(response.body);
+          }
+        });
+    });
+
+    return observable;
   }
 
-  delete(): Observable<any> {
-    const headers = this.getDefaultHeaders();
-    const url = this.getFullPath();
+  put(params?: HttpParams | undefined): Observable<any> {
+    return this.createHttpRequest('PUT', params, this.getPlain());
+  }
 
-    return this._base.http.delete(url, {headers});
+  delete(params?: HttpParams | undefined): Observable<any> {
+    return this.createHttpRequest('DELETE', params);
   }
 
   getPlain(): T {
