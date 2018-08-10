@@ -109,7 +109,6 @@ export class RestRoute {
       }
     }
 
-    // fix baseurl
     let baseurl = this.getBaseUrl();
     if (baseurl.charAt(baseurl.length - 1) === '/') {
       baseurl = baseurl.slice(0, -1);

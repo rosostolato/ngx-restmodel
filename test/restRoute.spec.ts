@@ -61,16 +61,15 @@ describe('RestRoute', () => {
 
   it('should post', async(() => {
     const toPost = {
+      userId: 1,
       body: "quia et suscipit↵suscipit recusandae consequuntur expedita et cum↵reprehenderit molestiae ut ut quas totam↵nostrum rerum est autem sunt rem eveniet architecto",
-      id: 1,
-      title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-      userId: 1
+      title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
     };
 
     route.post<Post>(toPost)
       .subscribe(data => {
         expect(data).not.to.be.equal(null);
-        expect(data.id).not.to.be.equal(null);
+        expect(data.id).to.be.equal(1);
       });
   }));
 
