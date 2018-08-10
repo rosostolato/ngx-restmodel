@@ -69,7 +69,7 @@ describe('RestRoute', () => {
     route.post<Post>(toPost)
       .subscribe(data => {
         expect(data).not.to.be.equal(null);
-        expect(data.id).to.be.equal(1);
+        expect(data.id).not.to.be.equal(null);
       });
   }));
 
