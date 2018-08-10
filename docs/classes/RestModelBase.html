@@ -109,10 +109,7 @@
                     id="xs-interfaces-links"
                 >
                     <li class="link">
-                        <a href="interfaces/AbstractBase.html" data-type="entity-link">AbstractBase</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/AbstractBase.html" data-type="entity-link">AbstractBase</a>
+                        <a href="interfaces/IAbstractBase.html" data-type="entity-link">IAbstractBase</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Resource.html" data-type="entity-link">Resource</a>
@@ -252,10 +249,7 @@
                     id="interfaces-links"
 >
                     <li class="link">
-                        <a href="interfaces/AbstractBase.html" data-type="entity-link">AbstractBase</a>
-                    </li>
-                    <li class="link">
-                        <a href="interfaces/AbstractBase.html" data-type="entity-link">AbstractBase</a>
+                        <a href="interfaces/IAbstractBase.html" data-type="entity-link">IAbstractBase</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Resource.html" data-type="entity-link">Resource</a>
@@ -396,12 +390,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(_base: <a href="../interfaces/AbstractBase.html">AbstractBase</a>, data: T)</code>
+<code>constructor(_base: <a href="../interfaces/IAbstractBase.html">IAbstractBase</a>, data: T)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/restModel.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/restModel.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -422,7 +416,7 @@
                                                         <td>_base</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../interfaces/AbstractBase.html" target="_self" >AbstractBase</a></code>
+                                                                    <code><a href="../interfaces/IAbstractBase.html" target="_self" >IAbstractBase</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -483,7 +477,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/restModel.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/restModel.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -512,14 +506,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>delete()</code>
+<code>delete(params?: HttpParams | undefined)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/restModel.ts:35</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/restModel.ts:52</a></div>
                             </td>
                         </tr>
 
@@ -528,9 +522,40 @@
                     <td class="col-md-4">
 
                             <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code>HttpParams | undefined</code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
                                 <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
 
                             </div>
+                                <div class="io-description">
+                                    
+                                </div>
                     </td>
                 </tr>
             </tbody>
@@ -557,7 +582,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/restModel.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/restModel.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -588,14 +613,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>put()</code>
+<code>put(params?: HttpParams | undefined)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/restModel.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/restModel.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -604,9 +629,40 @@
                     <td class="col-md-4">
 
                             <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code>HttpParams | undefined</code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
                                 <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
 
                             </div>
+                                <div class="io-description">
+                                    
+                                </div>
                     </td>
                 </tr>
             </tbody>
@@ -633,7 +689,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">src/restModel.ts:103</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/restModel.ts:117</a></div>
                             </td>
                         </tr>
 
@@ -691,26 +747,18 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpParams, HttpHeaders, HttpRequest, HttpEventType } from &#x27;@angular/common/http&#x27;;
+import { IAbstractBase } from &#x27;./types&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { Resource } from &#x27;./types&#x27;;
 import { RestRoute } from &#x27;./restRoute&#x27;;
-
-interface AbstractBase {
-  http: HttpClient;
-  resource: Resource;
-
-  getBaseUrl(): string;
-  getDefaultHeaders(): any;
-  route(path: string): RestRoute;
-}
 
 export type RestModel&lt;T&gt; &#x3D; RestModelBase&lt;T&gt; &amp; T;
 
 export class RestModelBase&lt;T&gt; {
   id: number;
 
-  constructor (private _base: AbstractBase, data: T) {
+  constructor (private _base: IAbstractBase, data: T) {
     const thisProto &#x3D; Object.getPrototypeOf(this);
     const dataProto &#x3D; Object.getPrototypeOf(data);
     Object.assign(thisProto, dataProto);
@@ -718,18 +766,40 @@ export class RestModelBase&lt;T&gt; {
     Object.assign(this, data);
   }
 
-  put(): Observable&lt;any&gt; {
-    const headers &#x3D; this.getDefaultHeaders();
+  private createHttpRequest(method: &#x27;PUT&#x27;|&#x27;DELETE&#x27;, params?: HttpParams, data?: any) {
+    const headers &#x3D; new HttpHeaders(this.getDefaultHeaders());
     const url &#x3D; this.getFullPath();
 
-    return this._base.http.put(url, this.getPlain(), {headers});
+    const req &#x3D; new HttpRequest(
+      method,url, data, {
+      headers, params
+    });
+
+    // pass through request interceptor
+    this._base.requestInterceptor(req);
+
+    // the observable to return
+    const requestObservable &#x3D; this._base.http.request(req);
+
+    const observable &#x3D; new Observable&lt;any&gt;(observer &#x3D;&gt; {
+      // pass through response interceptor
+      this._base.FullResponseInterceptor(requestObservable)
+        .subscribe(response &#x3D;&gt; {
+          if (response.type &#x3D;&#x3D;&#x3D; HttpEventType.Response) {
+            observer.next(response.body);
+          }
+        });
+    });
+
+    return observable;
   }
 
-  delete(): Observable&lt;any&gt; {
-    const headers &#x3D; this.getDefaultHeaders();
-    const url &#x3D; this.getFullPath();
+  put(params?: HttpParams | undefined): Observable&lt;any&gt; {
+    return this.createHttpRequest(&#x27;PUT&#x27;, params, this.getPlain());
+  }
 
-    return this._base.http.delete(url, {headers});
+  delete(params?: HttpParams | undefined): Observable&lt;any&gt; {
+    return this.createHttpRequest(&#x27;DELETE&#x27;, params);
   }
 
   getPlain(): T {
