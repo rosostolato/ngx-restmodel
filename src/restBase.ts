@@ -1,11 +1,21 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { RestRoute } from './restRoute';
 
 export class RestBase {
   constructor (protected http: HttpClient) {
   }
 
-  protected requestInterceptor(req: Request) {
+  protected requestInterceptor(req: HttpRequest<any>) {
+    //
+  }
+
+  protected responseInterceptor(res: Observable<any>): Observable<any> {
+    return res;
+  }
+
+  protected FullResponseInterceptor(res: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> {
+    return res;
   }
 
   protected mapModel(path: string, data: any) {
