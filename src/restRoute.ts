@@ -81,7 +81,7 @@ export class RestRoute {
     const headers = this.getDefaultHeaders();
     const url = this.getFullPath();
 
-    return this.http.post(url, {headers}, data).pipe(
+    return this.http.post(url, data, {headers}).pipe(
       map(response => this.makeRest<T>(response))
     );
   }
@@ -124,7 +124,7 @@ export class RestRoute {
     return this.base.getBaseUrl();
   }
 
-  private getDefaultHeaders(): any {
+  private getDefaultHeaders(): { [header: string]: string | string[]; } {
     return this.base.getDefaultHeaders();
   }
 

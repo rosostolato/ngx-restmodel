@@ -15,7 +15,7 @@ interface AbstractBase {
 export type RestModel<T> = RestModelBase<T> & T;
 
 export class RestModelBase<T> {
-  id?: number;
+  id: number;
 
   constructor (private _base: AbstractBase, data: T) {
     const thisProto = Object.getPrototypeOf(this);
@@ -29,14 +29,14 @@ export class RestModelBase<T> {
     const headers = this.getDefaultHeaders();
     const url = this.getFullPath();
 
-    return this._base.http.put(url, {headers}, this.getPlain());
+    return this._base.http.put(url, this.getPlain(), {headers});
   }
 
   delete(): Observable<any> {
     const headers = this.getDefaultHeaders();
     const url = this.getFullPath();
 
-    return this._base.http.put(url, {headers}, this.getPlain());
+    return this._base.http.delete(url, {headers});
   }
 
   getPlain(): T {
@@ -96,7 +96,7 @@ export class RestModelBase<T> {
     return this._base.getBaseUrl();
   }
 
-  private getDefaultHeaders(): any {
+  private getDefaultHeaders(): { [header: string]: string | string[]; } {
     return this._base.getDefaultHeaders();
   }
 

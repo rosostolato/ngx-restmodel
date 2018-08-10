@@ -16,7 +16,7 @@ export class RestBase {
     return '';
   }
 
-  getDefaultHeaders() {
+  getDefaultHeaders(): { [header: string]: string | string[]; } {
     return {};
   }
 
