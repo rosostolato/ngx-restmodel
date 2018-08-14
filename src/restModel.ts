@@ -1,6 +1,7 @@
 import { HttpParams, HttpHeaders, HttpRequest, HttpEventType } from '@angular/common/http';
 import { IAbstractBase } from './types';
 import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 import { Resource } from './types';
 import { RestRoute } from './restRoute';
 
@@ -30,22 +31,12 @@ export class RestModelBase<T> {
     req = this._base.requestInterceptor(req);
 
     // the observable to return
-    const requestObservable = this._base.http.request<any>(req);
+    const observable = this._base.http.request<any>(req);
 
-    const observable = new Observable<any>(observer => {
-      // pass through response interceptor
-      this._base
-      .responseInterceptor(requestObservable)
-        .subscribe(response => {
-          if (response.type === HttpEventType.Response) {
-            observer.next(response.body);
-          }
-        }, err => {
-          observer.error(err);
-        });
-    });
-
-    return observable;
+    return observable.pipe<any>(
+      filter(response => response.type === HttpEventType.Response),
+      map((response: HttpResponse<any>) => response.body)
+    );
   }
 
   put(params?: HttpParams | undefined): Observable<any> {

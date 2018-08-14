@@ -1,8 +1,8 @@
-import { HttpRequest, HttpParams, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { HttpRequest, HttpParams, HttpHeaders, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Resource, IAbstractBase } from './types';
 import { RestModel, RestModelBase } from './restModel';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 export class RestRoute {
   constructor (private base: IAbstractBase, private path: string) {
@@ -21,22 +21,12 @@ export class RestRoute {
     req = this.base.requestInterceptor(req);
 
     // the observable to return
-    const requestObservable = this.base.http.request<any>(req);
+    const observable = this.base.http.request<any>(req);
 
-    const observable = new Observable<any>(observer => {
-      // pass through response interceptor
-      this.base
-        .responseInterceptor(requestObservable)
-        .subscribe(response => {
-          if (response.type === HttpEventType.Response) {
-            observer.next(response.body);
-          }
-        }, err => {
-          observer.error(err);
-        });
-    });
-
-    return observable;
+    return observable.pipe<any>(
+      filter(response => response.type === HttpEventType.Response),
+      map((response: HttpResponse<any>) => response.body)
+    );
   }
 
   private makeRest<T>(data: any): RestModel<T> {
