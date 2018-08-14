@@ -1,4 +1,4 @@
-import { HttpParams, HttpHeaders, HttpRequest, HttpEventType } from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { IAbstractBase } from './types';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
