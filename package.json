@@ -1,6 +1,6 @@
 {
   "name": "ngx-restmodel",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Request from a restful api and link it to a model",
   "scripts": {
     "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
