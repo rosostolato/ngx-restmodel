@@ -1,7 +1,6 @@
 import { HttpRequest, HttpParams, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { Resource, IAbstractBase } from './types';
 import { RestModel, RestModelBase } from './restModel';
-import { cloneDeep } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,20 +12,21 @@ export class RestRoute {
     const url = this.getFullPath(method === 'GET' ? id_data : null);
     const headers = new HttpHeaders(this.getDefaultHeaders());
 
-    const req = new HttpRequest(method, url,
+    let req = new HttpRequest(method, url,
       method === 'POST' ? id_data : null,
       { headers, params }
     );
 
     // pass through request interceptor
-    this.base.requestInterceptor(req);
+    req = this.base.requestInterceptor(req);
 
     // the observable to return
-    const requestObservable = this.base.http.request(req);
+    const requestObservable = this.base.http.request<any>(req);
 
     const observable = new Observable<any>(observer => {
       // pass through response interceptor
-      this.base.FullResponseInterceptor(requestObservable)
+      this.base
+        .FullResponseInterceptor(requestObservable)
         .subscribe(response => {
           if (response.type === HttpEventType.Response) {
             observer.next(response.body);
