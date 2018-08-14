@@ -378,7 +378,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/restRoute.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/restRoute.ts:7</a></div>
                             </td>
                         </tr>
 
@@ -703,7 +703,6 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpRequest, HttpParams, HttpHeaders, HttpEventType } from &#x27;@angular/common/http&#x27;;
 import { Resource, IAbstractBase } from &#x27;./types&#x27;;
 import { RestModel, RestModelBase } from &#x27;./restModel&#x27;;
-import { cloneDeep } from &#x27;lodash&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
 import { map } from &#x27;rxjs/operators&#x27;;
 
@@ -715,20 +714,21 @@ export class RestRoute {
     const url &#x3D; this.getFullPath(method &#x3D;&#x3D;&#x3D; &#x27;GET&#x27; ? id_data : null);
     const headers &#x3D; new HttpHeaders(this.getDefaultHeaders());
 
-    const req &#x3D; new HttpRequest(method, url,
+    let req &#x3D; new HttpRequest(method, url,
       method &#x3D;&#x3D;&#x3D; &#x27;POST&#x27; ? id_data : null,
       { headers, params }
     );
 
     // pass through request interceptor
-    this.base.requestInterceptor(req);
+    req &#x3D; this.base.requestInterceptor(req);
 
     // the observable to return
-    const requestObservable &#x3D; this.base.http.request(req);
+    const requestObservable &#x3D; this.base.http.request&lt;any&gt;(req);
 
     const observable &#x3D; new Observable&lt;any&gt;(observer &#x3D;&gt; {
       // pass through response interceptor
-      this.base.FullResponseInterceptor(requestObservable)
+      this.base
+        .FullResponseInterceptor(requestObservable)
         .subscribe(response &#x3D;&gt; {
           if (response.type &#x3D;&#x3D;&#x3D; HttpEventType.Response) {
             observer.next(response.body);

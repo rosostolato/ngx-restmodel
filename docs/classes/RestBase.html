@@ -586,8 +586,8 @@ export class RestBase {
   constructor (protected http: HttpClient) {
   }
 
-  protected requestInterceptor(req: HttpRequest&lt;any&gt;) {
-    //
+  protected requestInterceptor(req: HttpRequest&lt;any&gt;): HttpRequest&lt;any&gt; {
+    return req;
   }
 
   protected responseInterceptor(res: Observable&lt;any&gt;): Observable&lt;any&gt; {

@@ -488,7 +488,7 @@ export interface IAbstractBase {
   route(path: string): RestRoute;
   mapModel(path: string, data: any): any;
 
-  requestInterceptor(req: HttpRequest&lt;any&gt;): any;
+  requestInterceptor(req: HttpRequest&lt;any&gt;): HttpRequest&lt;any&gt;;
   responseInterceptor(res: Observable&lt;any&gt;): Observable&lt;any&gt;;
   FullResponseInterceptor(res: Observable&lt;HttpEvent&lt;any&gt;&gt;): Observable&lt;HttpEvent&lt;any&gt;&gt;;
 }
