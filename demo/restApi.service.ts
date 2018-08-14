@@ -1,5 +1,5 @@
 import { RestBase, Restful } from '../src/index';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from './models/Post';
 

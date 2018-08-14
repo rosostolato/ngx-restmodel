@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.8"></a>
+## [0.0.8](https://github.com/rosostolato/ngx-restmodel/compare/v0.0.7...v0.0.8) (2018-08-14)
+
+
+### Bug Fixes
+
+* **RestBase:** Base should keep the originals properties, no copying ([e6f672a](https://github.com/rosostolato/ngx-restmodel/commit/e6f672a))
+* **Route:** params and headers were not in request ([085f547](https://github.com/rosostolato/ngx-restmodel/commit/085f547))
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/rosostolato/ngx-restmodel/compare/v0.0.6...v0.0.7) (2018-08-10)
 

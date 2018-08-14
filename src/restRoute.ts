@@ -9,12 +9,14 @@ export class RestRoute {
   constructor (private base: IAbstractBase, private path: string) {
   }
 
-  private createHttpRequest(method: 'GET'|'POST', params?: HttpParams, idOrData?: any) {
-    const url = this.getFullPath(method === 'GET' ? idOrData : null);
+  private createHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
+    const url = this.getFullPath(method === 'GET' ? id_data : null);
     const headers = new HttpHeaders(this.getDefaultHeaders());
 
     const req = new HttpRequest(method, url,
-      method === 'POST' ? idOrData : null);
+      method === 'POST' ? id_data : null,
+      { headers, params }
+    );
 
     // pass through request interceptor
     this.base.requestInterceptor(req);
@@ -37,18 +39,19 @@ export class RestRoute {
 
   private makeRest<T>(data: any): RestModel<T> {
     const model = this.mapModel(this.path, data);
-    const baseClone = cloneDeep(this.base);
 
-    baseClone.http = this.base.http;
+    const base = { ...this.base };
+    const proto = Object.getPrototypeOf(this.base);
+    Object.setPrototypeOf(base, proto);
 
     const resource: Resource = {
       id: data.id,
       path: this.path,
-      parent: baseClone.resource
+      parent: base.resource
     };
 
-    baseClone.resource = resource;
-    return new RestModelBase<T>(baseClone as any, model) as any;
+    base.resource = resource;
+    return new RestModelBase<T>(base as any, model) as any;
   }
 
   getList<T>(params?: HttpParams | undefined): Observable<Array<RestModel<T>>> {
