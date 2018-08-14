@@ -26,7 +26,7 @@ export class RestRoute {
     const observable = new Observable<any>(observer => {
       // pass through response interceptor
       this.base
-        .FullResponseInterceptor(requestObservable)
+        .responseInterceptor(requestObservable)
         .subscribe(response => {
           if (response.type === HttpEventType.Response) {
             observer.next(response.body);

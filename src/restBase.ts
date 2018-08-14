@@ -10,11 +10,7 @@ export class RestBase {
     return req;
   }
 
-  protected responseInterceptor(res: Observable<any>): Observable<any> {
-    return res;
-  }
-
-  protected FullResponseInterceptor(res: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> {
+  protected responseInterceptor(res: Observable<HttpEvent<any>>): Observable<HttpEvent<any>> {
     return res;
   }
 

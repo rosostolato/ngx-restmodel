@@ -35,7 +35,7 @@ export class RestModelBase<T> {
     const observable = new Observable<any>(observer => {
       // pass through response interceptor
       this._base
-      .FullResponseInterceptor(requestObservable)
+      .responseInterceptor(requestObservable)
         .subscribe(response => {
           if (response.type === HttpEventType.Response) {
             observer.next(response.body);
