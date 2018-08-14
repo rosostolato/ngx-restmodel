@@ -9,12 +9,14 @@ export class RestRoute {
   constructor (private base: IAbstractBase, private path: string) {
   }
 
-  private createHttpRequest(method: 'GET'|'POST', params?: HttpParams, idOrData?: any) {
-    const url = this.getFullPath(method === 'GET' ? idOrData : null);
+  private createHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
+    const url = this.getFullPath(method === 'GET' ? id_data : null);
     const headers = new HttpHeaders(this.getDefaultHeaders());
 
     const req = new HttpRequest(method, url,
-      method === 'POST' ? idOrData : null);
+      method === 'POST' ? id_data : null,
+      { headers, params }
+    );
 
     // pass through request interceptor
     this.base.requestInterceptor(req);
