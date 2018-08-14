@@ -40,6 +40,8 @@ export class RestModelBase<T> {
           if (response.type === HttpEventType.Response) {
             observer.next(response.body);
           }
+        }, err => {
+          observer.error(err);
         });
     });
 
