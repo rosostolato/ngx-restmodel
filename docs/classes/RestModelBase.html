@@ -513,7 +513,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/restModel.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/restModel.ts:53</a></div>
                             </td>
                         </tr>
 
@@ -582,7 +582,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/restModel.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/restModel.ts:57</a></div>
                             </td>
                         </tr>
 
@@ -620,7 +620,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/restModel.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/restModel.ts:49</a></div>
                             </td>
                         </tr>
 
@@ -689,7 +689,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/restModel.ts:117</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/restModel.ts:118</a></div>
                             </td>
                         </tr>
 
@@ -770,20 +770,21 @@ export class RestModelBase&lt;T&gt; {
     const headers &#x3D; new HttpHeaders(this.getDefaultHeaders());
     const url &#x3D; this.getFullPath();
 
-    const req &#x3D; new HttpRequest(
+    let req &#x3D; new HttpRequest(
       method,url, data, {
       headers, params
     });
 
     // pass through request interceptor
-    this._base.requestInterceptor(req);
+    req &#x3D; this._base.requestInterceptor(req);
 
     // the observable to return
-    const requestObservable &#x3D; this._base.http.request(req);
+    const requestObservable &#x3D; this._base.http.request&lt;any&gt;(req);
 
     const observable &#x3D; new Observable&lt;any&gt;(observer &#x3D;&gt; {
       // pass through response interceptor
-      this._base.FullResponseInterceptor(requestObservable)
+      this._base
+      .FullResponseInterceptor(requestObservable)
         .subscribe(response &#x3D;&gt; {
           if (response.type &#x3D;&#x3D;&#x3D; HttpEventType.Response) {
             observer.next(response.body);
