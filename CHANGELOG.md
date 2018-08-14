@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/rosostolato/ngx-restmodel/compare/v0.1.0...v0.1.1) (2018-08-14)
+
+
+### Bug Fixes
+
+* **restModel:** I forgot to change on restModel ([7379bef](https://github.com/rosostolato/ngx-restmodel/commit/7379bef))
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/rosostolato/ngx-restmodel/compare/v0.0.9...v0.1.0) (2018-08-14)
 
