@@ -79,6 +79,13 @@ export class DemoComponent {
       .getList<Post>()
       .subscribe(posts => {
         this.posts = posts;
+
+        debugger;
+
+        this.posts[0].put()
+          .subscribe(post => {
+            debugger;
+          });
       });
   }
 

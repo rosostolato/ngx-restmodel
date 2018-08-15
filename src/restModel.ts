@@ -1,16 +1,14 @@
 import { HttpParams, HttpHeaders, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { IAbstractBase } from './types';
+import { RestRoute } from './index';
 import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
-import { Resource } from './types';
-import { RestRoute } from './restRoute';
 
-export type RestModel<T> = RestModelBase<T> & T;
-
-export class RestModelBase<T> {
+export class RestModelBase<T> extends RestRoute {
   id: number;
 
-  constructor (private _base: IAbstractBase, data: T) {
+  constructor (_base: IAbstractBase, data: T) {
+    super(_base);
+
     const thisProto = Object.getPrototypeOf(this);
     const dataProto = Object.getPrototypeOf(data);
     Object.assign(thisProto, dataProto);
@@ -18,36 +16,24 @@ export class RestModelBase<T> {
     Object.assign(this, data);
   }
 
-  private createHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
+  private createModelHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
     const headers = new HttpHeaders(this.getDefaultHeaders());
     const url = this.getFullPath();
 
-    let req = new HttpRequest(
-      method,url, data, {
-      headers, params
-    });
-
-    // pass through request interceptor
-    req = this._base.requestInterceptor(req);
-
-    // the observable to return
-    let observable = this._base.http.request<any>(req);
-
-    // pass through response interceptor
-    observable = this._base.responseInterceptor(observable);
-
-    return observable.pipe(
-      filter(response => response.type === HttpEventType.Response),
-      map((response: HttpResponse<any>) => response.body)
+    const req = new HttpRequest(
+      method, url, method === 'PUT' ? data : null,
+      { headers, params }
     );
+
+    return this.createHttpRequest(req);
   }
 
   put(params?: HttpParams | undefined): Observable<any> {
-    return this.createHttpRequest('PUT', params, this.getPlain());
+    return this.createModelHttpRequest('PUT', params, this.getPlain());
   }
 
   delete(params?: HttpParams | undefined): Observable<any> {
-    return this.createHttpRequest('DELETE', params);
+    return this.createModelHttpRequest('DELETE', params);
   }
 
   getPlain(): T {
@@ -74,44 +60,11 @@ export class RestModelBase<T> {
     return plain;
   }
 
-  private getFullPath() {
-    let parentUrl = '/';
-    addRoute(this._base.resource);
-
-    function addRoute(route?: Resource) {
-      if (route) {
-        if (route.id) {
-          parentUrl = '/' + route.id + parentUrl;
-        }
-
-        parentUrl = '/' + route.path + parentUrl;
-
-        if (route.parent) {
-          addRoute(route.parent);
-        }
-      }
-    }
-
-    let baseurl = this.getBaseUrl();
-    if (baseurl.charAt(baseurl.length - 1) === '/') {
-      baseurl = baseurl.slice(0, -1);
-    }
-
-    const url = baseurl + parentUrl
-    return url.slice(0, url.length-1);
-  }
-
   // Base
-
-  private getBaseUrl(): string {
-    return this._base.getBaseUrl();
-  }
-
-  private getDefaultHeaders(): { [header: string]: string | string[]; } {
-    return this._base.getDefaultHeaders();
-  }
 
   route(path: string): RestRoute {
     return this._base.route(path);
   }
 }
+
+export type RestModel<T> = RestModelBase<T> & T;

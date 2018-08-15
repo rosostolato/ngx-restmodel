@@ -1,30 +1,27 @@
 import { HttpRequest, HttpParams, HttpHeaders, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Resource, IAbstractBase } from './types';
-import { RestModel, RestModelBase } from './restModel';
+import { RestModel, RestModelBase } from './index';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 export class RestRoute {
-  constructor (private base: IAbstractBase, private path: string) {
+  private _path?: string;
+
+  constructor (protected _base: IAbstractBase, _path?: string) {
+    if (_path) {
+      this._path = _path;
+    }
   }
 
-  private createHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
-    const url = this.getFullPath(method === 'GET' ? id_data : null);
-    const headers = new HttpHeaders(this.getDefaultHeaders());
-
-    let req = new HttpRequest(method, url,
-      method === 'POST' ? id_data : null,
-      { headers, params }
-    );
-
+  protected createHttpRequest(req: HttpRequest<any>) {
     // pass through request interceptor
-    req = this.base.requestInterceptor(req);
+    req = this._base.requestInterceptor(req);
 
     // the observable to return
-    let observable = this.base.http.request<any>(req);
+    let observable = this._base.http.request<any>(req);
 
     // pass through response interceptor
-    observable = this.base.responseInterceptor(observable);
+    observable = this._base.responseInterceptor(observable);
 
     return observable.pipe(
       filter(response => response.type === HttpEventType.Response),
@@ -32,41 +29,56 @@ export class RestRoute {
     );
   }
 
-  private makeRest<T>(data: any): RestModel<T> {
-    const model = this.mapModel(this.path, data);
+  private createRouteHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
+    const url = this.getFullPath(method === 'GET' ? id_data : null);
+    const headers = new HttpHeaders(this.getDefaultHeaders());
 
-    const base = { ...this.base };
-    const proto = Object.getPrototypeOf(this.base);
+    const req = new HttpRequest(method, url,
+      method === 'POST' ? id_data : null,
+      { headers, params }
+    );
+
+    return this.createHttpRequest(req);
+  }
+
+  protected makeRest<T>(data: any): RestModel<T> {
+    const model = this.mapModel(this._path || this._base.resource.path, data);
+
+    const base = { ...this._base };
+    const proto = Object.getPrototypeOf(this._base);
     Object.setPrototypeOf(base, proto);
 
-    const resource: Resource = {
-      id: data.id,
-      path: this.path,
-      parent: base.resource
-    };
+    if (this._path) {
+      const resource: Resource = {
+        id: data.id,
+        path: this._path,
+        parent: base.resource
+      };
 
-    base.resource = resource;
+      base.resource = resource;
+    }
+
     return new RestModelBase<T>(base as any, model) as any;
   }
 
   getList<T>(params?: HttpParams | undefined): Observable<Array<RestModel<T>>> {
-    return this.createHttpRequest('GET', params)
+    return this.createRouteHttpRequest('GET', params)
       .pipe(map((response: any[]) => response.map(r => this.makeRest<T>(r))));
   }
 
   getOne<T>(id: number, params?: HttpParams | undefined): Observable<RestModel<T>> {
-    return this.createHttpRequest('GET', params, id)
+    return this.createRouteHttpRequest('GET', params, id)
       .pipe(map(response => this.makeRest<T>(response)));
   }
 
   post<T>(data: any, params?: HttpParams | undefined): Observable<RestModel<T>> {
-    return this.createHttpRequest('POST', params, data)
+    return this.createRouteHttpRequest('POST', params, data)
       .pipe(map(response => this.makeRest<T>(response)));
   }
 
-  private getFullPath(id?: number) {
+  protected getFullPath(id?: number) {
     let parentUrl = '/';
-    addRoute(this.base.resource);
+    addRoute(this._base.resource);
 
     function addRoute(route?: Resource) {
       if (route) {
@@ -86,20 +98,25 @@ export class RestRoute {
       baseurl = baseurl.slice(0, -1);
     }
 
-    return baseurl + parentUrl + this.path + (id ?  '/' + id : '');
+    if (!this._path) {
+      parentUrl = parentUrl.slice(0, parentUrl.length-1);
+    }
+
+    const url = baseurl + parentUrl + (this._path || '') + (id ?  '/' + id : '');
+    return url;
   }
 
   // Base
 
-  private getBaseUrl(): string {
-    return this.base.getBaseUrl();
+  protected getBaseUrl(): string {
+    return this._base.getBaseUrl();
   }
 
-  private getDefaultHeaders(): { [header: string]: string | string[]; } {
-    return this.base.getDefaultHeaders();
+  protected getDefaultHeaders(): { [header: string]: string | string[]; } {
+    return this._base.getDefaultHeaders();
   }
 
-  private mapModel(path: string, data: any): any {
-    return this.base.mapModel(path, data);
+  protected mapModel(path: string, data: any): any {
+    return this._base.mapModel(path, data);
   }
 }
