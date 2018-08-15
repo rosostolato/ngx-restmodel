@@ -15,9 +15,7 @@ export class RestApi extends RestBase {
   }
 
   protected responseInterceptor(res: Observable<HttpEvent<any>>) {
-    return res.pipe(
-      tap(response => { this; debugger })
-    )
+    return res;
   }
 
   protected mapModel(route: string, data: any) {
