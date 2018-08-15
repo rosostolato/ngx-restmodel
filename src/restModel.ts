@@ -35,8 +35,7 @@ export class RestModelBase<T> extends RestRoute {
   }
 
   delete(params?: HttpParams): Observable<any> {
-    return this.createModelHttpRequest('DELETE', params)
-      .pipe(map(response => this.makeRest<T>(HttpMethod.DELETE, response)));
+    return this.createModelHttpRequest('DELETE', params);
   }
 
   getPlain(): T {
@@ -48,6 +47,7 @@ export class RestModelBase<T> extends RestRoute {
     const methods = [
       'delete',
       'getBaseUrl',
+      'createModelHttpRequest',
       'getDefaultHeaders',
       'getFullPath',
       'getPlain',

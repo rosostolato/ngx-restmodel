@@ -18,31 +18,6 @@ describe('RestRoute', () => {
     route = restApi.route('posts');
   });
 
-  // it('should have prototypes', () => {
-  //   const proto = Object.getPrototypeOf(route);
-  //   const protoKeys = Object.getOwnPropertyNames(proto);
-  //   const expected = [
-  //     'constructor',
-  //     'getList',
-  //     'getOne',
-  //     'post',
-  //     'makeRest',
-  //     'makeRestCollection',
-  //     'getFullPath',
-  //     'getBaseUrl',
-  //     'getDefaultHeaders',
-  //     'requestInterceptor',
-  //     'mapModel'
-  //   ];
-
-  //   const notExpected = [
-  //     'route'
-  //   ];
-
-  //   expect(protoKeys).to.include.members(expected);
-  //   expect(protoKeys).not.to.include.members(notExpected);
-  // });
-
   it('should get list', async(() => {
     route.getList<Post>()
       .subscribe(data => {
@@ -72,27 +47,4 @@ describe('RestRoute', () => {
         expect(data.id).not.to.be.equal(null);
       });
   }));
-
-  // it('should have route props', async(() => {
-  //   expect(route).to.haveOwnProperty('_route');
-
-  //   let mock: Route = {
-  //     path: 'posts',
-  //     parent: { path: '' }
-  //   };
-  //   expect((route as any)._route).to.be.eql(mock);
-
-  //   // mock again
-  //   mock.id = 1;
-  //   mock = {
-  //     path: 'comments',
-  //     parent: mock
-  //   };
-
-  //   route.getOne(1).subscribe(post =>
-  //     post.route('comments').getList().subscribe(data => {
-  //       expect(data).to.haveOwnProperty('_route');
-  //       expect((data as any)._route).to.be.eql(mock);
-  //     }));
-  // }));
 });
