@@ -1,7 +1,8 @@
-import { HttpParams, HttpHeaders, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { IAbstractBase } from './types';
+import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { IAbstractBase, HttpMethod } from './types';
 import { RestRoute } from './index';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export class RestModelBase<T> extends RestRoute {
   id: number;
@@ -28,12 +29,14 @@ export class RestModelBase<T> extends RestRoute {
     return this.createHttpRequest(req);
   }
 
-  put(params?: HttpParams | undefined): Observable<any> {
-    return this.createModelHttpRequest('PUT', params, this.getPlain());
+  put(params?: HttpParams): Observable<T> {
+    return this.createModelHttpRequest('PUT', params, this.getPlain())
+      .pipe(map(response => this.makeRest<T>(HttpMethod.PUT, response)));
   }
 
-  delete(params?: HttpParams | undefined): Observable<any> {
-    return this.createModelHttpRequest('DELETE', params);
+  delete(params?: HttpParams): Observable<any> {
+    return this.createModelHttpRequest('DELETE', params)
+      .pipe(map(response => this.makeRest<T>(HttpMethod.DELETE, response)));
   }
 
   getPlain(): T {

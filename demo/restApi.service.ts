@@ -1,4 +1,4 @@
-import { RestBase, Restful } from '../src/index';
+import { RestBase, Restful, HttpMethod } from '../src/index';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from './models/Post';
@@ -18,7 +18,7 @@ export class RestApi extends RestBase {
     return res;
   }
 
-  protected mapModel(route: string, data: any) {
+  protected mapModel(method: HttpMethod, route: string, data: any) {
     if (route === 'posts') {
       return new Post(data);
     }

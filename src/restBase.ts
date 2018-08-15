@@ -1,6 +1,7 @@
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RestRoute } from './restRoute';
+import { HttpMethod } from './types';
 
 export class RestBase {
   constructor (protected http: HttpClient) {
@@ -14,7 +15,7 @@ export class RestBase {
     return res;
   }
 
-  protected mapModel(path: string, data: any) {
+  protected mapModel(method: HttpMethod, path: string, data: any) {
     return data;
   }
 

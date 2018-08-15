@@ -16,8 +16,12 @@ export interface IAbstractBase {
   getDefaultHeaders(): any;
 
   route(path: string): RestRoute;
-  mapModel(path: string, data: any): any;
+  mapModel(method: HttpMethod, path: string, data: any): any;
 
   requestInterceptor(req: HttpRequest<any>): HttpRequest<any>;
   responseInterceptor(res: Observable<HttpEvent<any>>): Observable<HttpEvent<any>>;
+}
+
+export enum HttpMethod {
+  GET, POST, PUT, DELETE
 }

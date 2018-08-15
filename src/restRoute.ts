@@ -1,5 +1,5 @@
 import { HttpRequest, HttpParams, HttpHeaders, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Resource, IAbstractBase } from './types';
+import { Resource, IAbstractBase, HttpMethod } from './types';
 import { RestModel, RestModelBase } from './index';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
@@ -41,8 +41,8 @@ export class RestRoute {
     return this.createHttpRequest(req);
   }
 
-  protected makeRest<T>(data: any): RestModel<T> {
-    const model = this.mapModel(this._path || this._base.resource.path, data);
+  protected makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
+    const model = this.mapModel(method, this._path || this._base.resource.path, data);
 
     const base = { ...this._base };
     const proto = Object.getPrototypeOf(this._base);
@@ -61,19 +61,19 @@ export class RestRoute {
     return new RestModelBase<T>(base as any, model) as any;
   }
 
-  getList<T>(params?: HttpParams | undefined): Observable<Array<RestModel<T>>> {
+  getList<T>(params?: HttpParams): Observable<Array<RestModel<T>>> {
     return this.createRouteHttpRequest('GET', params)
-      .pipe(map((response: any[]) => response.map(r => this.makeRest<T>(r))));
+      .pipe(map((response: any[]) => response.map(r => this.makeRest<T>(HttpMethod.GET, r))));
   }
 
-  getOne<T>(id: number, params?: HttpParams | undefined): Observable<RestModel<T>> {
+  getOne<T>(id: number, params?: HttpParams): Observable<RestModel<T>> {
     return this.createRouteHttpRequest('GET', params, id)
-      .pipe(map(response => this.makeRest<T>(response)));
+      .pipe(map(response => this.makeRest<T>(HttpMethod.GET, response)));
   }
 
-  post<T>(data: any, params?: HttpParams | undefined): Observable<RestModel<T>> {
+  post<T>(data: any, params?: HttpParams): Observable<RestModel<T>> {
     return this.createRouteHttpRequest('POST', params, data)
-      .pipe(map(response => this.makeRest<T>(response)));
+      .pipe(map(response => this.makeRest<T>(HttpMethod.POST, response)));
   }
 
   protected getFullPath(id?: number) {
@@ -116,7 +116,7 @@ export class RestRoute {
     return this._base.getDefaultHeaders();
   }
 
-  protected mapModel(path: string, data: any): any {
-    return this._base.mapModel(path, data);
+  protected mapModel(method: HttpMethod, path: string, data: any): any {
+    return this._base.mapModel(method, path, data);
   }
 }
