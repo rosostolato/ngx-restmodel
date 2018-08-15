@@ -36,7 +36,7 @@ export class RestModelBase<T> {
     // pass through response interceptor
     observable = this._base.responseInterceptor(observable);
 
-    return observable.pipe<any>(
+    return observable.pipe(
       filter(response => response.type === HttpEventType.Response),
       map((response: HttpResponse<any>) => response.body)
     );
