@@ -1,8 +1,9 @@
 import { RestBase, Restful } from '../src/index';
-import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from './models/Post';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 @Restful({
@@ -14,13 +15,9 @@ export class RestApi extends RestBase {
   }
 
   protected responseInterceptor(res: Observable<HttpEvent<any>>) {
-    res.subscribe(response => {
-      debugger;
-    }, err => {
-      debugger;
-    });
-
-    return res;
+    return res.pipe(
+      tap(response => { this; debugger })
+    )
   }
 
   protected mapModel(route: string, data: any) {

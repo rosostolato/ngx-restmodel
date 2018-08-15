@@ -21,9 +21,12 @@ export class RestRoute {
     req = this.base.requestInterceptor(req);
 
     // the observable to return
-    const observable = this.base.http.request<any>(req);
+    let observable = this.base.http.request<any>(req);
 
-    return observable.pipe<any>(
+    // pass through response interceptor
+    observable = this.base.responseInterceptor(observable);
+
+    return observable.pipe(
       filter(response => response.type === HttpEventType.Response),
       map((response: HttpResponse<any>) => response.body)
     );
