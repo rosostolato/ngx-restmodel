@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { RestApi } from '../demo/restApi.service';
 import { expect } from 'chai';
-import { RestModel, RestRoute } from '../src';
+import { RestModel, RestRoute, RestModelBase } from '../src';
 import { Post } from '../demo/models/Post';
 
 describe('RestModel', () => {
@@ -30,7 +30,7 @@ describe('RestModel', () => {
 
   it('should delete', async(() => {
     post.delete().subscribe(res => {
-      expect(res).to.be.eql({});
+      expect(res).to.be.an.instanceof(RestModelBase);
     });
   }));
 

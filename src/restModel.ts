@@ -35,7 +35,8 @@ export class RestModelBase<T> extends RestRoute {
   }
 
   delete(params?: HttpParams): Observable<any> {
-    return this.createModelHttpRequest('DELETE', params);
+    return this.createModelHttpRequest('DELETE', params)
+      .pipe(map(response => this.makeRest<T>(HttpMethod.PUT, response)));
   }
 
   getPlain(): T {
@@ -56,7 +57,7 @@ export class RestModelBase<T> extends RestRoute {
     ];
 
     for (const key of methods) {
-      if (key) { delete proto[key]; }
+      delete proto[key];
     }
 
     Object.setPrototypeOf(plain, proto);

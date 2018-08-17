@@ -19,7 +19,7 @@ export class RestApi extends RestBase {
   }
 
   protected mapModel(method: HttpMethod, route: string, data: any) {
-    if (route === 'posts') {
+    if (method !== HttpMethod.DELETE && route === 'posts') {
       return new Post(data);
     }
 
