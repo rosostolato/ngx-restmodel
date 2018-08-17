@@ -133,6 +133,9 @@
                     id="xs-miscellaneous-links"
                 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -273,6 +276,9 @@
                     id="miscellaneous-links"
 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -373,12 +379,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(base: <a href="../interfaces/IAbstractBase.html">IAbstractBase</a>, path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>constructor(_base: <a href="../interfaces/IAbstractBase.html">IAbstractBase</a>, _path?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/restRoute.ts:7</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/restRoute.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -396,7 +402,7 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>base</td>
+                                                        <td>_base</td>
                                                   
                                                         <td>
                                                                     <code><a href="../interfaces/IAbstractBase.html" target="_self" >IAbstractBase</a></code>
@@ -408,14 +414,14 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>path</td>
+                                                        <td>_path</td>
                                                   
                                                         <td>
                                                                     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                                         </td>
                                                   
                                                     <td>
-                                                            no
+                                                            yes
                                                     </td>
                                                     
                                                 </tr>
@@ -449,14 +455,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>getList(params?: HttpParams | undefined)</code>
+<code>getList(params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/restRoute.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/restRoute.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -486,7 +492,7 @@
                                                 <tr>
                                                         <td>params</td>
                                                         <td>
-                                                                    <code>HttpParams | undefined</code>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -526,14 +532,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>getOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, params?: HttpParams | undefined)</code>
+<code>getOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/restRoute.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/restRoute.ts:69</a></div>
                             </td>
                         </tr>
 
@@ -575,7 +581,7 @@
                                                 <tr>
                                                         <td>params</td>
                                                         <td>
-                                                                    <code>HttpParams | undefined</code>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -615,14 +621,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>post(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, params?: HttpParams | undefined)</code>
+<code>post(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/restRoute.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/restRoute.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -664,7 +670,7 @@
                                                 <tr>
                                                         <td>params</td>
                                                         <td>
-                                                                    <code>HttpParams | undefined</code>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -700,80 +706,87 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpRequest, HttpParams, HttpHeaders, HttpEventType } from &#x27;@angular/common/http&#x27;;
-import { Resource, IAbstractBase } from &#x27;./types&#x27;;
-import { RestModel, RestModelBase } from &#x27;./restModel&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpRequest, HttpParams, HttpHeaders, HttpEventType, HttpResponse } from &#x27;@angular/common/http&#x27;;
+import { Resource, IAbstractBase, HttpMethod } from &#x27;./types&#x27;;
+import { RestModel, RestModelBase } from &#x27;./index&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { map } from &#x27;rxjs/operators&#x27;;
+import { map, filter } from &#x27;rxjs/operators&#x27;;
 
 export class RestRoute {
-  constructor (private base: IAbstractBase, private path: string) {
+  private _path?: string;
+
+  constructor (protected _base: IAbstractBase, _path?: string) {
+    if (_path) {
+      this._path &#x3D; _path;
+    }
   }
 
-  private createHttpRequest(method: &#x27;GET&#x27;|&#x27;POST&#x27;, params?: HttpParams, id_data?: any) {
+  protected createHttpRequest(req: HttpRequest&lt;any&gt;) {
+    // pass through request interceptor
+    req &#x3D; this._base.requestInterceptor(req);
+
+    // the observable to return
+    let observable &#x3D; this._base.http.request&lt;any&gt;(req);
+
+    // pass through response interceptor
+    observable &#x3D; this._base.responseInterceptor(observable);
+
+    return observable.pipe(
+      filter(response &#x3D;&gt; response.type &#x3D;&#x3D;&#x3D; HttpEventType.Response),
+      map((response: HttpResponse&lt;any&gt;) &#x3D;&gt; response.body)
+    );
+  }
+
+  private createRouteHttpRequest(method: &#x27;GET&#x27;|&#x27;POST&#x27;, params?: HttpParams, id_data?: any) {
     const url &#x3D; this.getFullPath(method &#x3D;&#x3D;&#x3D; &#x27;GET&#x27; ? id_data : null);
     const headers &#x3D; new HttpHeaders(this.getDefaultHeaders());
 
-    let req &#x3D; new HttpRequest(method, url,
+    const req &#x3D; new HttpRequest(method, url,
       method &#x3D;&#x3D;&#x3D; &#x27;POST&#x27; ? id_data : null,
       { headers, params }
     );
 
-    // pass through request interceptor
-    req &#x3D; this.base.requestInterceptor(req);
-
-    // the observable to return
-    const requestObservable &#x3D; this.base.http.request&lt;any&gt;(req);
-
-    const observable &#x3D; new Observable&lt;any&gt;(observer &#x3D;&gt; {
-      // pass through response interceptor
-      this.base
-        .FullResponseInterceptor(requestObservable)
-        .subscribe(response &#x3D;&gt; {
-          if (response.type &#x3D;&#x3D;&#x3D; HttpEventType.Response) {
-            observer.next(response.body);
-          }
-        });
-    });
-
-    return observable;
+    return this.createHttpRequest(req);
   }
 
-  private makeRest&lt;T&gt;(data: any): RestModel&lt;T&gt; {
-    const model &#x3D; this.mapModel(this.path, data);
+  protected makeRest&lt;T&gt;(method: HttpMethod, data: any): RestModel&lt;T&gt; {
+    const model &#x3D; this.mapModel(method, this._path || this._base.resource.path, data);
 
-    const base &#x3D; { ...this.base };
-    const proto &#x3D; Object.getPrototypeOf(this.base);
+    const base &#x3D; { ...this._base };
+    const proto &#x3D; Object.getPrototypeOf(this._base);
     Object.setPrototypeOf(base, proto);
 
-    const resource: Resource &#x3D; {
-      id: data.id,
-      path: this.path,
-      parent: base.resource
-    };
+    if (this._path) {
+      const resource: Resource &#x3D; {
+        id: data.id,
+        path: this._path,
+        parent: base.resource
+      };
 
-    base.resource &#x3D; resource;
+      base.resource &#x3D; resource;
+    }
+
     return new RestModelBase&lt;T&gt;(base as any, model) as any;
   }
 
-  getList&lt;T&gt;(params?: HttpParams | undefined): Observable&lt;Array&lt;RestModel&lt;T&gt;&gt;&gt; {
-    return this.createHttpRequest(&#x27;GET&#x27;, params)
-      .pipe(map((response: any[]) &#x3D;&gt; response.map(r &#x3D;&gt; this.makeRest&lt;T&gt;(r))));
+  getList&lt;T&gt;(params?: HttpParams): Observable&lt;Array&lt;RestModel&lt;T&gt;&gt;&gt; {
+    return this.createRouteHttpRequest(&#x27;GET&#x27;, params)
+      .pipe(map((response: any[]) &#x3D;&gt; response.map(r &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.GET, r))));
   }
 
-  getOne&lt;T&gt;(id: number, params?: HttpParams | undefined): Observable&lt;RestModel&lt;T&gt;&gt; {
-    return this.createHttpRequest(&#x27;GET&#x27;, params, id)
-      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(response)));
+  getOne&lt;T&gt;(id: number, params?: HttpParams): Observable&lt;RestModel&lt;T&gt;&gt; {
+    return this.createRouteHttpRequest(&#x27;GET&#x27;, params, id)
+      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.GET, response)));
   }
 
-  post&lt;T&gt;(data: any, params?: HttpParams | undefined): Observable&lt;RestModel&lt;T&gt;&gt; {
-    return this.createHttpRequest(&#x27;POST&#x27;, params, data)
-      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(response)));
+  post&lt;T&gt;(data: any, params?: HttpParams): Observable&lt;RestModel&lt;T&gt;&gt; {
+    return this.createRouteHttpRequest(&#x27;POST&#x27;, params, data)
+      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.POST, response)));
   }
 
-  private getFullPath(id?: number) {
+  protected getFullPath(id?: number) {
     let parentUrl &#x3D; &#x27;/&#x27;;
-    addRoute(this.base.resource);
+    addRoute(this._base.resource);
 
     function addRoute(route?: Resource) {
       if (route) {
@@ -793,21 +806,26 @@ export class RestRoute {
       baseurl &#x3D; baseurl.slice(0, -1);
     }
 
-    return baseurl + parentUrl + this.path + (id ?  &#x27;/&#x27; + id : &#x27;&#x27;);
+    if (!this._path) {
+      parentUrl &#x3D; parentUrl.slice(0, parentUrl.length-1);
+    }
+
+    const url &#x3D; baseurl + parentUrl + (this._path || &#x27;&#x27;) + (id ?  &#x27;/&#x27; + id : &#x27;&#x27;);
+    return url;
   }
 
   // Base
 
-  private getBaseUrl(): string {
-    return this.base.getBaseUrl();
+  protected getBaseUrl(): string {
+    return this._base.getBaseUrl();
   }
 
-  private getDefaultHeaders(): { [header: string]: string | string[]; } {
-    return this.base.getDefaultHeaders();
+  protected getDefaultHeaders(): { [header: string]: string | string[]; } {
+    return this._base.getDefaultHeaders();
   }
 
-  private mapModel(path: string, data: any): any {
-    return this.base.mapModel(path, data);
+  protected mapModel(method: HttpMethod, path: string, data: any): any {
+    return this._base.mapModel(method, path, data);
   }
 }
 </code></pre>

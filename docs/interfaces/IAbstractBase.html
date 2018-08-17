@@ -133,6 +133,9 @@
                     id="xs-miscellaneous-links"
                 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -273,6 +276,9 @@
                     id="miscellaneous-links"
 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -362,9 +368,6 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                    <a href="#FullResponseInterceptor">FullResponseInterceptor</a>
-                                </li>
-                                <li>
                                     <a href="#getBaseUrl">getBaseUrl</a>
                                 </li>
                                 <li>
@@ -394,75 +397,6 @@
         <h3 id="methods">
             Methods
         </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="FullResponseInterceptor"></a>
-                        <span class="name">
-                            <b>
-                            FullResponseInterceptor
-                            </b>
-                            <a href="#FullResponseInterceptor"><span class="fa fa-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>FullResponseInterceptor(res: Observable<HttpEvent<any>>)</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/types.ts:23</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>res</td>
-                                                        <td>
-                                                                    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -554,7 +488,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>mapModel(path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+<code>mapModel(method: <a href="../undefineds/HttpMethod.html">HttpMethod</a>, path: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
                     </td>
                 </tr>
 
@@ -580,6 +514,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                                <tr>
+                                                        <td>method</td>
+                                                        <td>
+                                                                    <code><a href="../miscellaneous/enumerations.html#HttpMethod" target="_self" >HttpMethod</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
                                                 <tr>
                                                         <td>path</td>
                                                         <td>
@@ -704,7 +650,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>responseInterceptor(res: Observable<any>)</code>
+<code>responseInterceptor(res: Observable<HttpEvent<any>>)</code>
                     </td>
                 </tr>
 
@@ -733,7 +679,7 @@
                                                 <tr>
                                                         <td>res</td>
                                                         <td>
-                                                                    <code>Observable&lt;any&gt;</code>
+                                                                    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
                                                         </td>
                                                     
                                                     <td>
@@ -748,7 +694,7 @@
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+                                <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
 
                             </div>
                                 <div class="io-description">
@@ -913,11 +859,14 @@ export interface IAbstractBase {
   getDefaultHeaders(): any;
 
   route(path: string): RestRoute;
-  mapModel(path: string, data: any): any;
+  mapModel(method: HttpMethod, path: string, data: any): any;
 
   requestInterceptor(req: HttpRequest&lt;any&gt;): HttpRequest&lt;any&gt;;
-  responseInterceptor(res: Observable&lt;any&gt;): Observable&lt;any&gt;;
-  FullResponseInterceptor(res: Observable&lt;HttpEvent&lt;any&gt;&gt;): Observable&lt;HttpEvent&lt;any&gt;&gt;;
+  responseInterceptor(res: Observable&lt;HttpEvent&lt;any&gt;&gt;): Observable&lt;HttpEvent&lt;any&gt;&gt;;
+}
+
+export enum HttpMethod {
+  GET, POST, PUT, DELETE
 }
 </code></pre>
     </div>

@@ -133,6 +133,9 @@
                     id="xs-miscellaneous-links"
                 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -273,6 +276,9 @@
                     id="miscellaneous-links"
 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -330,6 +336,12 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code><a href="../classes/RestRoute.html" target="_self" >RestRoute</a></code>
+            </p>
 
 
 
@@ -372,6 +384,15 @@
                             <li>
                                 <a href="#route">route</a>
                             </li>
+                            <li>
+                                <a href="#getList">getList</a>
+                            </li>
+                            <li>
+                                <a href="#getOne">getOne</a>
+                            </li>
+                            <li>
+                                <a href="#post">post</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -395,7 +416,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/restModel.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/restModel.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -477,7 +498,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/restModel.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/restModel.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -506,14 +527,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>delete(params?: HttpParams | undefined)</code>
+<code>delete(params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/restModel.ts:53</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/restModel.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -535,7 +556,7 @@
                                                 <tr>
                                                         <td>params</td>
                                                         <td>
-                                                                    <code>HttpParams | undefined</code>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -582,7 +603,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/restModel.ts:57</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/restModel.ts:42</a></div>
                             </td>
                         </tr>
 
@@ -613,14 +634,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>put(params?: HttpParams | undefined)</code>
+<code>put(params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/restModel.ts:49</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/restModel.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -642,7 +663,7 @@
                                                 <tr>
                                                         <td>params</td>
                                                         <td>
-                                                                    <code>HttpParams | undefined</code>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
                                                         </td>
                                                     
                                                     <td>
@@ -657,7 +678,7 @@
                             <div>
                             </div>
                             <div class="io-description">
-                                <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+                                <b>Returns : </b>    <code>Observable&lt;T&gt;</code>
 
                             </div>
                                 <div class="io-description">
@@ -689,7 +710,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/restModel.ts:118</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/restModel.ts:69</a></div>
                             </td>
                         </tr>
 
@@ -736,6 +757,279 @@
                 </tr>
             </tbody>
         </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getList"></a>
+                        <span class="name">
+                            <b>
+                            getList
+                            </b>
+                            <a href="#getList"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>getList(params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/RestRoute.html" target="_self" >RestRoute</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in RestRoute:64</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>T</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#RestModel" target="_self" >Observable&lt;Array&lt;RestModel&lt;T&gt;&gt;&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getOne"></a>
+                        <span class="name">
+                            <b>
+                            getOne
+                            </b>
+                            <a href="#getOne"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>getOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/RestRoute.html" target="_self" >RestRoute</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in RestRoute:69</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>T</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>id</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#RestModel" target="_self" >Observable&lt;RestModel&lt;T&gt;&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="post"></a>
+                        <span class="name">
+                            <b>
+                            post
+                            </b>
+                            <a href="#post"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>post(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, params?: <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a>)</code>
+                    </td>
+                </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from     <code><a href="../classes/RestRoute.html" target="_self" >RestRoute</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in RestRoute:74</div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="col-md-4">
+                                <b>Type parameters :</b>
+                                <ul class="type-parameters">
+                                        <li>T</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>data</td>
+                                                        <td>
+                                                                    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>params</td>
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpParams" target="_blank" >HttpParams</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            yes
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../miscellaneous/typealiases.html#RestModel" target="_self" >Observable&lt;RestModel&lt;T&gt;&gt;</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
 
 
@@ -747,18 +1041,18 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpParams, HttpHeaders, HttpRequest, HttpEventType } from &#x27;@angular/common/http&#x27;;
-import { IAbstractBase } from &#x27;./types&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpParams, HttpHeaders, HttpRequest } from &#x27;@angular/common/http&#x27;;
+import { IAbstractBase, HttpMethod } from &#x27;./types&#x27;;
+import { RestRoute } from &#x27;./index&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { Resource } from &#x27;./types&#x27;;
-import { RestRoute } from &#x27;./restRoute&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
 
-export type RestModel&lt;T&gt; &#x3D; RestModelBase&lt;T&gt; &amp; T;
-
-export class RestModelBase&lt;T&gt; {
+export class RestModelBase&lt;T&gt; extends RestRoute {
   id: number;
 
-  constructor (private _base: IAbstractBase, data: T) {
+  constructor (_base: IAbstractBase, data: T) {
+    super(_base);
+
     const thisProto &#x3D; Object.getPrototypeOf(this);
     const dataProto &#x3D; Object.getPrototypeOf(data);
     Object.assign(thisProto, dataProto);
@@ -766,41 +1060,26 @@ export class RestModelBase&lt;T&gt; {
     Object.assign(this, data);
   }
 
-  private createHttpRequest(method: &#x27;PUT&#x27;|&#x27;DELETE&#x27;, params?: HttpParams, data?: any) {
+  private createModelHttpRequest(method: &#x27;PUT&#x27;|&#x27;DELETE&#x27;, params?: HttpParams, data?: any) {
     const headers &#x3D; new HttpHeaders(this.getDefaultHeaders());
     const url &#x3D; this.getFullPath();
 
-    let req &#x3D; new HttpRequest(
-      method,url, data, {
-      headers, params
-    });
+    const req &#x3D; new HttpRequest(
+      method, url, method &#x3D;&#x3D;&#x3D; &#x27;PUT&#x27; ? data : null,
+      { headers, params }
+    );
 
-    // pass through request interceptor
-    req &#x3D; this._base.requestInterceptor(req);
-
-    // the observable to return
-    const requestObservable &#x3D; this._base.http.request&lt;any&gt;(req);
-
-    const observable &#x3D; new Observable&lt;any&gt;(observer &#x3D;&gt; {
-      // pass through response interceptor
-      this._base
-      .FullResponseInterceptor(requestObservable)
-        .subscribe(response &#x3D;&gt; {
-          if (response.type &#x3D;&#x3D;&#x3D; HttpEventType.Response) {
-            observer.next(response.body);
-          }
-        });
-    });
-
-    return observable;
+    return this.createHttpRequest(req);
   }
 
-  put(params?: HttpParams | undefined): Observable&lt;any&gt; {
-    return this.createHttpRequest(&#x27;PUT&#x27;, params, this.getPlain());
+  put(params?: HttpParams): Observable&lt;T&gt; {
+    return this.createModelHttpRequest(&#x27;PUT&#x27;, params, this.getPlain())
+      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.PUT, response)));
   }
 
-  delete(params?: HttpParams | undefined): Observable&lt;any&gt; {
-    return this.createHttpRequest(&#x27;DELETE&#x27;, params);
+  delete(params?: HttpParams): Observable&lt;any&gt; {
+    return this.createModelHttpRequest(&#x27;DELETE&#x27;, params)
+      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.PUT, response)));
   }
 
   getPlain(): T {
@@ -812,6 +1091,7 @@ export class RestModelBase&lt;T&gt; {
     const methods &#x3D; [
       &#x27;delete&#x27;,
       &#x27;getBaseUrl&#x27;,
+      &#x27;createModelHttpRequest&#x27;,
       &#x27;getDefaultHeaders&#x27;,
       &#x27;getFullPath&#x27;,
       &#x27;getPlain&#x27;,
@@ -820,54 +1100,21 @@ export class RestModelBase&lt;T&gt; {
     ];
 
     for (const key of methods) {
-      if (key) { delete proto[key]; }
+      delete proto[key];
     }
 
     Object.setPrototypeOf(plain, proto);
     return plain;
   }
 
-  private getFullPath() {
-    let parentUrl &#x3D; &#x27;/&#x27;;
-    addRoute(this._base.resource);
-
-    function addRoute(route?: Resource) {
-      if (route) {
-        if (route.id) {
-          parentUrl &#x3D; &#x27;/&#x27; + route.id + parentUrl;
-        }
-
-        parentUrl &#x3D; &#x27;/&#x27; + route.path + parentUrl;
-
-        if (route.parent) {
-          addRoute(route.parent);
-        }
-      }
-    }
-
-    let baseurl &#x3D; this.getBaseUrl();
-    if (baseurl.charAt(baseurl.length - 1) &#x3D;&#x3D;&#x3D; &#x27;/&#x27;) {
-      baseurl &#x3D; baseurl.slice(0, -1);
-    }
-
-    const url &#x3D; baseurl + parentUrl
-    return url.slice(0, url.length-1);
-  }
-
   // Base
-
-  private getBaseUrl(): string {
-    return this._base.getBaseUrl();
-  }
-
-  private getDefaultHeaders(): { [header: string]: string | string[]; } {
-    return this._base.getDefaultHeaders();
-  }
 
   route(path: string): RestRoute {
     return this._base.route(path);
   }
 }
+
+export type RestModel&lt;T&gt; &#x3D; RestModelBase&lt;T&gt; &amp; T;
 </code></pre>
     </div>
 </div>

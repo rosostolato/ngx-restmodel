@@ -133,6 +133,9 @@
                     id="xs-miscellaneous-links"
                 >
                     <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
+                    <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
                     <li class="link">
@@ -272,6 +275,9 @@
             <ul class="links collapse"
                     id="miscellaneous-links"
 >
+                    <li class="link">
+                      <a href="miscellaneous/enumerations.html" data-type="entity-link">Enums</a>
+                    </li>
                     <li class="link">
                       <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
                     </li>
@@ -486,11 +492,14 @@ export interface IAbstractBase {
   getDefaultHeaders(): any;
 
   route(path: string): RestRoute;
-  mapModel(path: string, data: any): any;
+  mapModel(method: HttpMethod, path: string, data: any): any;
 
   requestInterceptor(req: HttpRequest&lt;any&gt;): HttpRequest&lt;any&gt;;
-  responseInterceptor(res: Observable&lt;any&gt;): Observable&lt;any&gt;;
-  FullResponseInterceptor(res: Observable&lt;HttpEvent&lt;any&gt;&gt;): Observable&lt;HttpEvent&lt;any&gt;&gt;;
+  responseInterceptor(res: Observable&lt;HttpEvent&lt;any&gt;&gt;): Observable&lt;HttpEvent&lt;any&gt;&gt;;
+}
+
+export enum HttpMethod {
+  GET, POST, PUT, DELETE
 }
 </code></pre>
     </div>
