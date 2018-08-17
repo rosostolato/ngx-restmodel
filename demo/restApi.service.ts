@@ -1,7 +1,9 @@
-import { RestBase, Restful } from '../src/index';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { RestBase, Restful, HttpMethod } from '../src/index';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from './models/Post';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 @Restful({
@@ -12,8 +14,12 @@ export class RestApi extends RestBase {
     super(http);
   }
 
-  protected mapModel(route: string, data: any) {
-    if (route === 'posts') {
+  protected responseInterceptor(res: Observable<HttpEvent<any>>) {
+    return res;
+  }
+
+  protected mapModel(method: HttpMethod, route: string, data: any) {
+    if (method !== HttpMethod.DELETE && route === 'posts') {
       return new Post(data);
     }
 

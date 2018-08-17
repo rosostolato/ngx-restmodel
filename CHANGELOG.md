@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/rosostolato/ngx-restmodel/compare/v0.1.1...v0.1.2) (2018-08-17)
+
+
+### Bug Fixes
+
+* **observable:** http methods obversables returning errors ([83b8901](https://github.com/rosostolato/ngx-restmodel/commit/83b8901))
+* **responseInterceptor:** missing call ([df2b6fc](https://github.com/rosostolato/ngx-restmodel/commit/df2b6fc))
+
+
+### Features
+
+* **demo:** improved demo app ([799d470](https://github.com/rosostolato/ngx-restmodel/commit/799d470))
+* **Http:** reduce some codes with rxjs pipes ([56cc762](https://github.com/rosostolato/ngx-restmodel/commit/56cc762))
+* **mapModel:** pass the current method on params ([59b28fa](https://github.com/rosostolato/ngx-restmodel/commit/59b28fa))
+* **response:** renamed FullResponse to response only ([5ccb4eb](https://github.com/rosostolato/ngx-restmodel/commit/5ccb4eb))
+* **RestModel:** RestModelBase extends RestRoute for methods sharing ([3d1c218](https://github.com/rosostolato/ngx-restmodel/commit/3d1c218))
+* **test:** cover almost 100% of code ([993011c](https://github.com/rosostolato/ngx-restmodel/commit/993011c))
+* **tests:** improove code coverage ([46eb968](https://github.com/rosostolato/ngx-restmodel/commit/46eb968))
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/rosostolato/ngx-restmodel/compare/v0.1.0...v0.1.1) (2018-08-14)
 

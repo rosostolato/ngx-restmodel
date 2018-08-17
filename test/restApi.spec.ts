@@ -1,10 +1,14 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { TestBed, inject, async } from '@angular/core/testing';
+import { HttpClientModule, HttpClient, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
 import { RestApi } from '../demo/restApi.service';
+import { RestBase, Restful } from '../src';
 import { expect } from 'chai';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 describe('RestBase extend', () => {
   let restApi: RestApi;
+  let httpClient: HttpClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,37 +17,61 @@ describe('RestBase extend', () => {
     });
 
     restApi = TestBed.get(RestApi);
+    httpClient = TestBed.get(HttpClient);
   });
 
   it('should get service', inject([RestApi], (service: RestApi) => {
     expect(restApi).to.be.equal(service);
   }));
 
-  // it('should have prototypes', () => {
-  //   const proto = Object.getPrototypeOf(restApi);
-  //   const protoKeys = Object.getOwnPropertyNames(proto);
-  //   const expected = [
-  //     'constructor',
-  //     'getBaseUrl',
-  //     'getDefaultHeaders',
-  //     'requestInterceptor',
-  //     'mapModel',
-  //     'route'
-  //   ];
-
-  //   expect(protoKeys).to.include.members(expected);
-  // });
-
   it('should get URL base', () => {
     const url = restApi.getBaseUrl();
     expect(url).to.be.equal('https://jsonplaceholder.typicode.com');
   });
 
-  // it('should say hello world', () => {
-  //   const fixture: ComponentFixture<HelloWorldComponent> = TestBed.createComponent(HelloWorldComponent);
-  //   fixture.detectChanges();
-  //   expect(fixture.nativeElement.innerHTML.trim()).to.equal(
-  //     'Hello world from the Ngx Restmodel module!'
-  //   );
-  // });
+  it('should intercept', async(() => {
+    @Restful({
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
+      headers: { 'content-type': 'application/json' }
+    })
+    class MockRestApi extends RestBase {
+      constructor(http: HttpClient) {
+        super(http)
+      }
+
+      requestInterceptor(req: HttpRequest<any>) {
+        expect(req).to.be.an.instanceof(HttpRequest);
+        expect(req.url).to.be.equal('https://jsonplaceholder.typicode.com/posts');
+        return req;
+      }
+
+      responseInterceptor(res: Observable<HttpEvent<any>>) {
+        expect(res).to.be.an.instanceof(Observable);
+
+        res.pipe(tap((data) => {
+          if (data.type === HttpEventType.Response) {
+            expect(data.body).to.be.an.instanceof(Array);
+            expect(data.body.length).to.be.greaterThan(0);
+          }
+        }));
+
+        return res;
+      }
+    }
+
+    const mock = new MockRestApi(httpClient);
+    mock.route('posts').getList().subscribe();
+  }));
+
+  it('should test restBase class', async(() => {
+    const mock = new RestBase(httpClient);
+
+    expect(mock.getBaseUrl()).to.be.equal('');
+
+    (mock as any).getBaseUrl = () => {
+      return 'https://jsonplaceholder.typicode.com';
+    };
+
+    mock.route('posts').getList().subscribe();
+  }));
 });
