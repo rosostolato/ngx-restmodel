@@ -67,24 +67,11 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
     const url = this._getFullPath();
 
     const req = new HttpRequest(
-      method, url, method === HttpMethod.PUT ? this._sendData() : null,
+      method, url, method === HttpMethod.PUT ? this.getPlain(true) : null,
       { headers, params }
     );
 
     return this._createHttpRequest(req);
-  }
-
-  private _sendData(): T {
-    const data: any = this.getPlain();
-
-    // JsonIgnore
-    if (this._jsonIgnore) {
-      for (const key of this._jsonIgnore) {
-        delete data[key];
-      }
-    }
-
-    return data;
   }
 
   put(params?: HttpParams): Observable<T> {
@@ -97,12 +84,21 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
       .pipe(map(response => this._makeRest<T>(HttpMethod.DELETE, response)));
   }
 
-  getPlain(): T {
+  getPlain(removeIngoredFields = false): T {
     const plain: any = {};
     Object.assign(plain, this);
-
     delete plain._base;
-    delete plain.jsonIgnore;
+
+    if (removeIngoredFields) {
+      // JsonIgnore
+      if (this._jsonIgnore) {
+        for (const key of this._jsonIgnore) {
+          delete plain[key];
+        }
+      }
+
+      delete plain._jsonIgnore;
+    }
 
     const proto = { ...Object.getPrototypeOf(this) };
     const methods = [
@@ -114,8 +110,7 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
       'getFullPath',
       'getDefaultHeaders',
       '_createModelHttpRequest',
-      '_unifyPrototype',
-      '_sendData'
+      '_unifyPrototype'
     ];
 
     for (const key of methods) {
