@@ -10,8 +10,6 @@ export class RestModelBase<T> extends RestRoute {
   constructor (_base: IAbstractBase, data: T) {
     super(_base);
 
-    debugger;
-
     const thisProto = Object.getPrototypeOf(this);
     let dataProto = Object.getPrototypeOf(data);
     dataProto = this.unifyPrototype(dataProto);
