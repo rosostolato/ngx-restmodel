@@ -87,6 +87,7 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
   getPlain(removeIngoredFields = false): T {
     const plain: any = {};
     Object.assign(plain, this);
+    delete plain._base;
 
     if (removeIngoredFields) {
       // JsonIgnore

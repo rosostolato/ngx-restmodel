@@ -30,7 +30,10 @@ import { RestModel } from '../src';
           <td>{{post.userId}}</td>
           <td>{{post.title}}</td>
           <td>{{post.body}}</td>
-          <td><input class="btn btn-default" type="button" value="Get Comments" (click)="GetComments(post)" /></td>
+          <td>
+            <input class="btn btn-default" type="button" value="Get Comments" (click)="GetComments(post)" />
+            <input class="btn btn-default" type="button" value="Put Post" (click)="PutPost(post)" style="width: 100%" />
+          </td>
         </tr>
         <tr *ngIf="!posts.length">
           <td><i>Click on 'Get Posts'</i></td>
@@ -82,7 +85,6 @@ export class DemoComponent {
 
         posts[0].put().subscribe(post => {
           // there is no 'body' because of @jsonIgnore decorator
-          debugger;
         });
       });
   }
@@ -93,5 +95,12 @@ export class DemoComponent {
       .subscribe(comments => {
         this.comments = comments;
       });
+  }
+
+  PutPost(post: RestModel<Post>) {
+    post.put().subscribe(p => {
+      p.body = 'Put is ok!';
+      post.setValues(p);
+    });
   }
 }
