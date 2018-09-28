@@ -13,11 +13,12 @@ export class RestRoute {
     }
 
     // hide _base
-    const proto = Object.getPrototypeOf(this);
-    proto._base = _base;
-    delete this._base;
-
-    Object.setPrototypeOf(this, proto);
+    // FIXME: did not work
+    // delete this._base;
+    // const proto =
+    // Object.getPrototypeOf(this);
+    // Object.assign(proto, {_base});
+    // Object.setPrototypeOf(this, proto);
   }
 
   private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
@@ -60,7 +61,7 @@ export class RestRoute {
       const resource: Resource = {
         id: data.id,
         path: this._path,
-        parent: this._base.resource
+        parent: baseCopy.resource
       };
 
       baseCopy.resource = resource;
