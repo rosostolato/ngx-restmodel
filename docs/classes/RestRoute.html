@@ -112,6 +112,9 @@
                         <a href="interfaces/IAbstractBase.html" data-type="entity-link">IAbstractBase</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/IRestModel.html" data-type="entity-link">IRestModel</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/Resource.html" data-type="entity-link">Resource</a>
                     </li>
                     <li class="link">
@@ -253,6 +256,9 @@
 >
                     <li class="link">
                         <a href="interfaces/IAbstractBase.html" data-type="entity-link">IAbstractBase</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/IRestModel.html" data-type="entity-link">IRestModel</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Resource.html" data-type="entity-link">Resource</a>
@@ -462,7 +468,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/restRoute.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/restRoute.ts:73</a></div>
                             </td>
                         </tr>
 
@@ -539,7 +545,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/restRoute.ts:69</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/restRoute.ts:78</a></div>
                             </td>
                         </tr>
 
@@ -628,7 +634,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/restRoute.ts:74</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/restRoute.ts:83</a></div>
                             </td>
                         </tr>
 
@@ -719,9 +725,28 @@ export class RestRoute {
     if (_path) {
       this._path &#x3D; _path;
     }
+
+    // hide _base
+    const proto &#x3D; Object.getPrototypeOf(this);
+    proto._base &#x3D; _base;
+    delete this._base;
+
+    Object.setPrototypeOf(this, proto);
   }
 
-  protected createHttpRequest(req: HttpRequest&lt;any&gt;) {
+  private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
+    const url &#x3D; this._getFullPath(method &#x3D;&#x3D;&#x3D; HttpMethod.GET ? id_data : null);
+    const headers &#x3D; new HttpHeaders(this._getDefaultHeaders());
+
+    const req &#x3D; new HttpRequest(method, url,
+      method &#x3D;&#x3D;&#x3D; HttpMethod.POST ? id_data : null,
+      { headers, params }
+    );
+
+    return this._createHttpRequest(req);
+  }
+
+  protected _createHttpRequest(req: HttpRequest&lt;any&gt;) {
     // pass through request interceptor
     req &#x3D; this._base.requestInterceptor(req);
 
@@ -737,54 +762,45 @@ export class RestRoute {
     );
   }
 
-  private createRouteHttpRequest(method: &#x27;GET&#x27;|&#x27;POST&#x27;, params?: HttpParams, id_data?: any) {
-    const url &#x3D; this.getFullPath(method &#x3D;&#x3D;&#x3D; &#x27;GET&#x27; ? id_data : null);
-    const headers &#x3D; new HttpHeaders(this.getDefaultHeaders());
+  protected _makeRest&lt;T&gt;(method: HttpMethod, data: any): RestModel&lt;T&gt; {
+    const model &#x3D; this._mapModel(method, this._path || this._base.resource.path, data);
 
-    const req &#x3D; new HttpRequest(method, url,
-      method &#x3D;&#x3D;&#x3D; &#x27;POST&#x27; ? id_data : null,
-      { headers, params }
-    );
-
-    return this.createHttpRequest(req);
-  }
-
-  protected makeRest&lt;T&gt;(method: HttpMethod, data: any): RestModel&lt;T&gt; {
-    const model &#x3D; this.mapModel(method, this._path || this._base.resource.path, data);
-
-    const base &#x3D; { ...this._base };
-    const proto &#x3D; Object.getPrototypeOf(this._base);
-    Object.setPrototypeOf(base, proto);
+    // create a copy of base class
+    const baseCopy &#x3D; { ...this._base };
+    const baseProto &#x3D; Object.getPrototypeOf(this._base);
+    Object.setPrototypeOf(baseCopy, baseProto);
 
     if (this._path) {
       const resource: Resource &#x3D; {
         id: data.id,
         path: this._path,
-        parent: base.resource
+        parent: this._base.resource
       };
 
-      base.resource &#x3D; resource;
+      baseCopy.resource &#x3D; resource;
     }
 
-    return new RestModelBase&lt;T&gt;(base as any, model) as any;
+    return new RestModelBase&lt;T&gt;(baseCopy as any, model) as any;
   }
 
-  getList&lt;T&gt;(params?: HttpParams): Observable&lt;Array&lt;RestModel&lt;T&gt;&gt;&gt; {
-    return this.createRouteHttpRequest(&#x27;GET&#x27;, params)
-      .pipe(map((response: any[]) &#x3D;&gt; response.map(r &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.GET, r))));
+  // methods
+  getList&lt;T &#x3D; any&gt;(params?: HttpParams): Observable&lt;Array&lt;RestModel&lt;T&gt;&gt;&gt; {
+    return this._createRouteHttpRequest(HttpMethod.GET, params)
+      .pipe(map((response: any[]) &#x3D;&gt; response.map(r &#x3D;&gt; this._makeRest&lt;T&gt;(HttpMethod.GET, r))));
   }
 
-  getOne&lt;T&gt;(id: number, params?: HttpParams): Observable&lt;RestModel&lt;T&gt;&gt; {
-    return this.createRouteHttpRequest(&#x27;GET&#x27;, params, id)
-      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.GET, response)));
+  getOne&lt;T &#x3D; any&gt;(id: number, params?: HttpParams): Observable&lt;RestModel&lt;T&gt;&gt; {
+    return this._createRouteHttpRequest(HttpMethod.GET, params, id)
+      .pipe(map(response &#x3D;&gt; this._makeRest&lt;T&gt;(HttpMethod.GET, response)));
   }
 
-  post&lt;T&gt;(data: any, params?: HttpParams): Observable&lt;RestModel&lt;T&gt;&gt; {
-    return this.createRouteHttpRequest(&#x27;POST&#x27;, params, data)
-      .pipe(map(response &#x3D;&gt; this.makeRest&lt;T&gt;(HttpMethod.POST, response)));
+  post&lt;T &#x3D; any&gt;(data: any, params?: HttpParams): Observable&lt;RestModel&lt;T&gt;&gt; {
+    return this._createRouteHttpRequest(HttpMethod.POST, params, data)
+      .pipe(map(response &#x3D;&gt; this._makeRest&lt;T&gt;(HttpMethod.POST, response)));
   }
 
-  protected getFullPath(id?: number) {
+  /////////
+  protected _getFullPath(id?: number) {
     let parentUrl &#x3D; &#x27;/&#x27;;
     addRoute(this._base.resource);
 
@@ -801,7 +817,7 @@ export class RestRoute {
       }
     }
 
-    let baseurl &#x3D; this.getBaseUrl();
+    let baseurl &#x3D; this._getBaseUrl();
     if (baseurl.charAt(baseurl.length - 1) &#x3D;&#x3D;&#x3D; &#x27;/&#x27;) {
       baseurl &#x3D; baseurl.slice(0, -1);
     }
@@ -815,16 +831,15 @@ export class RestRoute {
   }
 
   // Base
-
-  protected getBaseUrl(): string {
+  protected _getBaseUrl(): string {
     return this._base.getBaseUrl();
   }
 
-  protected getDefaultHeaders(): { [header: string]: string | string[]; } {
+  protected _getDefaultHeaders(): { [header: string]: string | string[]; } {
     return this._base.getDefaultHeaders();
   }
 
-  protected mapModel(method: HttpMethod, path: string, data: any): any {
+  protected _mapModel(method: HttpMethod, path: string, data: any): any {
     return this._base.mapModel(method, path, data);
   }
 }

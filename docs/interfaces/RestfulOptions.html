@@ -112,6 +112,9 @@
                         <a href="interfaces/IAbstractBase.html" data-type="entity-link">IAbstractBase</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/IRestModel.html" data-type="entity-link">IRestModel</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/Resource.html" data-type="entity-link">Resource</a>
                     </li>
                     <li class="link">
@@ -253,6 +256,9 @@
 >
                     <li class="link">
                         <a href="interfaces/IAbstractBase.html" data-type="entity-link">IAbstractBase</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/IRestModel.html" data-type="entity-link">IRestModel</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/Resource.html" data-type="entity-link">Resource</a>
@@ -447,7 +453,7 @@
   headers?: any
 }
 
-export function Restful( args: RestfulOptions ) {
+export function Restful(args: RestfulOptions) {
   return (Target: any): any &#x3D;&gt; {
     if (args.baseUrl) {
       Target.prototype.getBaseUrl &#x3D; () &#x3D;&gt; {
@@ -463,6 +469,11 @@ export function Restful( args: RestfulOptions ) {
 
     return Target;
   };
+}
+
+export function JsonIgnore(target: any, key: string) {
+  target._jsonIgnore &#x3D; target._jsonIgnore || [];
+  target._jsonIgnore.push(key);
 }
 </code></pre>
     </div>
