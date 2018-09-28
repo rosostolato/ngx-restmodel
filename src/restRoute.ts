@@ -44,21 +44,22 @@ export class RestRoute {
   protected makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
     const model = this.mapModel(method, this._path || this._base.resource.path, data);
 
-    const base = { ...this._base };
-    const proto = Object.getPrototypeOf(this._base);
-    Object.setPrototypeOf(base, proto);
+    // create a copy of base class
+    const baseCopy = { ...this._base };
+    const baseProto = Object.getPrototypeOf(this._base);
+    Object.setPrototypeOf(baseCopy, baseProto);
 
     if (this._path) {
       const resource: Resource = {
         id: data.id,
         path: this._path,
-        parent: base.resource
+        parent: this._base.resource
       };
 
-      base.resource = resource;
+      baseCopy.resource = resource;
     }
 
-    return new RestModelBase<T>(base as any, model) as any;
+    return new RestModelBase<T>(baseCopy as any, model) as any;
   }
 
   getList<T>(params?: HttpParams): Observable<Array<RestModel<T>>> {

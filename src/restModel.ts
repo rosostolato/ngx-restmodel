@@ -10,11 +10,30 @@ export class RestModelBase<T> extends RestRoute {
   constructor (_base: IAbstractBase, data: T) {
     super(_base);
 
+    debugger;
+
     const thisProto = Object.getPrototypeOf(this);
-    const dataProto = Object.getPrototypeOf(data);
+    let dataProto = Object.getPrototypeOf(data);
+    dataProto = this.unifyPrototype(dataProto);
+
     Object.assign(thisProto, dataProto);
     Object.setPrototypeOf(this, thisProto);
     Object.assign(this, data);
+  }
+
+  private unifyPrototype(proto: any) {
+    let out = {...proto}
+    recursive(Object.getPrototypeOf(proto));
+    return out;
+
+    function recursive(p: any) {
+      const names = Object.getOwnPropertyNames(p);
+
+      if (!names.some(v => v === 'isPrototypeOf')) {
+        out = {...p, ...out}; // out is prefered
+        recursive(Object.getPrototypeOf(p))
+      }
+    }
   }
 
   private createModelHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
