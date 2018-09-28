@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/rosostolato/ngx-restmodel/compare/v0.1.2...v0.1.3) (2018-09-28)
+
+
+### Bug Fixes
+
+* **restmodel:** fix bug with extended models - issue [#2](https://github.com/rosostolato/ngx-restmodel/issues/2) ([e5e306d](https://github.com/rosostolato/ngx-restmodel/commit/e5e306d))
+* **restmodel:** fixed inheriting prototype [#3](https://github.com/rosostolato/ngx-restmodel/issues/3) ([44a4bdb](https://github.com/rosostolato/ngx-restmodel/commit/44a4bdb))
+* **restModel:** remove route methods from restModel type ([7d6061f](https://github.com/rosostolato/ngx-restmodel/commit/7d6061f))
+* forgotten method ([4c85e59](https://github.com/rosostolato/ngx-restmodel/commit/4c85e59))
+
+
+### Features
+
+* **httpMethods:** enum as string ([a5ba9b0](https://github.com/rosostolato/ngx-restmodel/commit/a5ba9b0))
+* **restModel:** JsonIgnore decorator ([2038bb8](https://github.com/rosostolato/ngx-restmodel/commit/2038bb8))
+* **route:** default template is any ([7aa1d51](https://github.com/rosostolato/ngx-restmodel/commit/7aa1d51))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/rosostolato/ngx-restmodel/compare/v0.1.1...v0.1.2) (2018-08-17)
 
