@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 
 interface IRestModel<T> {
   put(params?: HttpParams): Observable<T>;
-
   delete(params?: HttpParams): Observable<any>;
 
   getPlain(): T;
@@ -16,6 +15,8 @@ interface IRestModel<T> {
 
 export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
   id: number;
+
+  private _jsonIgnore?: string[];
 
   constructor (_base: IAbstractBase, data: T) {
     super(_base);
@@ -73,9 +74,16 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
     return this._createHttpRequest(req);
   }
 
-  private _sendData() {
-    // TODO: JsonIgnore
-    const data = this.getPlain();
+  private _sendData(): T {
+    const data: any = this.getPlain();
+
+    // JsonIgnore
+    if (this._jsonIgnore) {
+      for (const key of this._jsonIgnore) {
+        delete data[key];
+      }
+    }
+
     return data;
   }
 
@@ -92,7 +100,9 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
   getPlain(): T {
     const plain: any = {};
     Object.assign(plain, this);
+
     delete plain._base;
+    delete plain.jsonIgnore;
 
     const proto = { ...Object.getPrototypeOf(this) };
     const methods = [

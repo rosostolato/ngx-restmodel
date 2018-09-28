@@ -3,7 +3,7 @@ export interface RestfulOptions {
   headers?: any
 }
 
-export function Restful( args: RestfulOptions ) {
+export function Restful(args: RestfulOptions) {
   return (Target: any): any => {
     if (args.baseUrl) {
       Target.prototype.getBaseUrl = () => {
@@ -19,4 +19,9 @@ export function Restful( args: RestfulOptions ) {
 
     return Target;
   };
+}
+
+export function JsonIgnore(target: any, key: string) {
+  target._jsonIgnore = target._jsonIgnore || [];
+  target._jsonIgnore.push(key);
 }
