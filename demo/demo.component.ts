@@ -79,6 +79,11 @@ export class DemoComponent {
       .getList<Post>()
       .subscribe(posts => {
         this.posts = posts;
+
+        posts[0].put().subscribe(post => {
+          // there is no 'body' because of @jsonIgnore decorator
+          debugger;
+        });
       });
   }
 

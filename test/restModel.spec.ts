@@ -20,11 +20,11 @@ describe('RestModel', () => {
 
   it('should put', async(() => {
     const test = 'testing';
-    post.body = test;
+    post.title = test;
 
     post.put().subscribe(res => {
       expect(res).not.to.be.equal(null);
-      expect(res.body).to.be.equal(test);
+      expect(res.title).to.be.equal(test);
     });
   }));
 

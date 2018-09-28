@@ -11,9 +11,28 @@ export class RestRoute {
     if (_path) {
       this._path = _path;
     }
+
+    // hide _base
+    const proto = Object.getPrototypeOf(this);
+    proto._base = _base;
+    delete this._base;
+
+    Object.setPrototypeOf(this, proto);
   }
 
-  protected createHttpRequest(req: HttpRequest<any>) {
+  private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
+    const url = this._getFullPath(method === HttpMethod.GET ? id_data : null);
+    const headers = new HttpHeaders(this._getDefaultHeaders());
+
+    const req = new HttpRequest(method, url,
+      method === HttpMethod.POST ? id_data : null,
+      { headers, params }
+    );
+
+    return this._createHttpRequest(req);
+  }
+
+  protected _createHttpRequest(req: HttpRequest<any>) {
     // pass through request interceptor
     req = this._base.requestInterceptor(req);
 
@@ -29,54 +48,45 @@ export class RestRoute {
     );
   }
 
-  private createRouteHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
-    const url = this.getFullPath(method === 'GET' ? id_data : null);
-    const headers = new HttpHeaders(this.getDefaultHeaders());
+  protected _makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
+    const model = this._mapModel(method, this._path || this._base.resource.path, data);
 
-    const req = new HttpRequest(method, url,
-      method === 'POST' ? id_data : null,
-      { headers, params }
-    );
-
-    return this.createHttpRequest(req);
-  }
-
-  protected makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
-    const model = this.mapModel(method, this._path || this._base.resource.path, data);
-
-    const base = { ...this._base };
-    const proto = Object.getPrototypeOf(this._base);
-    Object.setPrototypeOf(base, proto);
+    // create a copy of base class
+    const baseCopy = { ...this._base };
+    const baseProto = Object.getPrototypeOf(this._base);
+    Object.setPrototypeOf(baseCopy, baseProto);
 
     if (this._path) {
       const resource: Resource = {
         id: data.id,
         path: this._path,
-        parent: base.resource
+        parent: this._base.resource
       };
 
-      base.resource = resource;
+      baseCopy.resource = resource;
     }
 
-    return new RestModelBase<T>(base as any, model) as any;
+    return new RestModelBase<T>(baseCopy as any, model) as any;
   }
 
-  getList<T>(params?: HttpParams): Observable<Array<RestModel<T>>> {
-    return this.createRouteHttpRequest('GET', params)
-      .pipe(map((response: any[]) => response.map(r => this.makeRest<T>(HttpMethod.GET, r))));
+  // methods
+  getList<T = any>(params?: HttpParams): Observable<Array<RestModel<T>>> {
+    return this._createRouteHttpRequest(HttpMethod.GET, params)
+      .pipe(map((response: any[]) => response.map(r => this._makeRest<T>(HttpMethod.GET, r))));
   }
 
-  getOne<T>(id: number, params?: HttpParams): Observable<RestModel<T>> {
-    return this.createRouteHttpRequest('GET', params, id)
-      .pipe(map(response => this.makeRest<T>(HttpMethod.GET, response)));
+  getOne<T = any>(id: number, params?: HttpParams): Observable<RestModel<T>> {
+    return this._createRouteHttpRequest(HttpMethod.GET, params, id)
+      .pipe(map(response => this._makeRest<T>(HttpMethod.GET, response)));
   }
 
-  post<T>(data: any, params?: HttpParams): Observable<RestModel<T>> {
-    return this.createRouteHttpRequest('POST', params, data)
-      .pipe(map(response => this.makeRest<T>(HttpMethod.POST, response)));
+  post<T = any>(data: any, params?: HttpParams): Observable<RestModel<T>> {
+    return this._createRouteHttpRequest(HttpMethod.POST, params, data)
+      .pipe(map(response => this._makeRest<T>(HttpMethod.POST, response)));
   }
 
-  protected getFullPath(id?: number) {
+  /////////
+  protected _getFullPath(id?: number) {
     let parentUrl = '/';
     addRoute(this._base.resource);
 
@@ -93,7 +103,7 @@ export class RestRoute {
       }
     }
 
-    let baseurl = this.getBaseUrl();
+    let baseurl = this._getBaseUrl();
     if (baseurl.charAt(baseurl.length - 1) === '/') {
       baseurl = baseurl.slice(0, -1);
     }
@@ -107,16 +117,15 @@ export class RestRoute {
   }
 
   // Base
-
-  protected getBaseUrl(): string {
+  protected _getBaseUrl(): string {
     return this._base.getBaseUrl();
   }
 
-  protected getDefaultHeaders(): { [header: string]: string | string[]; } {
+  protected _getDefaultHeaders(): { [header: string]: string | string[]; } {
     return this._base.getDefaultHeaders();
   }
 
-  protected mapModel(method: HttpMethod, path: string, data: any): any {
+  protected _mapModel(method: HttpMethod, path: string, data: any): any {
     return this._base.mapModel(method, path, data);
   }
 }

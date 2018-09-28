@@ -1,15 +1,10 @@
 import { IComment } from './interfaces';
+import { FromJson } from './fromJson';
 
-export class Comment implements IComment {
+export class Comment extends FromJson<IComment> implements IComment {
   id: number;
   postId: number;
   name: string;
   email: string;
   body: string;
-
-  constructor (obj?: IComment) {
-    if (obj) {
-      Object.assign(this, obj);
-    }
-  }
 }

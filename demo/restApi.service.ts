@@ -1,9 +1,9 @@
 import { RestBase, Restful, HttpMethod } from '../src/index';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Comment } from './models/Comment';
 import { Post } from './models/Post';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 @Restful({
@@ -21,6 +21,9 @@ export class RestApi extends RestBase {
   protected mapModel(method: HttpMethod, route: string, data: any) {
     if (method !== HttpMethod.DELETE && route === 'posts') {
       return new Post(data);
+    }
+    if (method !== HttpMethod.DELETE && route === 'comments') {
+      return new Comment(data);
     }
 
     return data;
