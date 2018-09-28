@@ -13,6 +13,18 @@ export class RestRoute {
     }
   }
 
+  private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
+    const url = this._getFullPath(method === HttpMethod.GET ? id_data : null);
+    const headers = new HttpHeaders(this._getDefaultHeaders());
+
+    const req = new HttpRequest(method, url,
+      method === HttpMethod.POST ? id_data : null,
+      { headers, params }
+    );
+
+    return this._createHttpRequest(req);
+  }
+
   protected _createHttpRequest(req: HttpRequest<any>) {
     // pass through request interceptor
     req = this._base.requestInterceptor(req);
@@ -27,18 +39,6 @@ export class RestRoute {
       filter(response => response.type === HttpEventType.Response),
       map((response: HttpResponse<any>) => response.body)
     );
-  }
-
-  private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
-    const url = this._getFullPath(method === HttpMethod.GET ? id_data : null);
-    const headers = new HttpHeaders(this._getDefaultHeaders());
-
-    const req = new HttpRequest(method, url,
-      method === HttpMethod.POST ? id_data : null,
-      { headers, params }
-    );
-
-    return this._createHttpRequest(req);
   }
 
   protected _makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
