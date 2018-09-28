@@ -468,7 +468,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/restRoute.ts:73</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/restRoute.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -545,7 +545,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/restRoute.ts:78</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/restRoute.ts:79</a></div>
                             </td>
                         </tr>
 
@@ -634,7 +634,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/restRoute.ts:83</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">src/restRoute.ts:84</a></div>
                             </td>
                         </tr>
 
@@ -727,11 +727,12 @@ export class RestRoute {
     }
 
     // hide _base
-    const proto &#x3D; Object.getPrototypeOf(this);
-    proto._base &#x3D; _base;
-    delete this._base;
-
-    Object.setPrototypeOf(this, proto);
+    // FIXME: did not work
+    // delete this._base;
+    // const proto &#x3D;
+    // Object.getPrototypeOf(this);
+    // Object.assign(proto, {_base});
+    // Object.setPrototypeOf(this, proto);
   }
 
   private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
@@ -774,7 +775,7 @@ export class RestRoute {
       const resource: Resource &#x3D; {
         id: data.id,
         path: this._path,
-        parent: this._base.resource
+        parent: baseCopy.resource
       };
 
       baseCopy.resource &#x3D; resource;

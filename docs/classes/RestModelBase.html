@@ -753,7 +753,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/restModel.ts:123</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/restModel.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -828,7 +828,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in RestRoute:73</div>
+                                    <div class="io-line">Defined in RestRoute:74</div>
                             </td>
                         </tr>
 
@@ -911,7 +911,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in RestRoute:78</div>
+                                    <div class="io-line">Defined in RestRoute:79</div>
                             </td>
                         </tr>
 
@@ -1006,7 +1006,7 @@
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in RestRoute:83</div>
+                                    <div class="io-line">Defined in RestRoute:84</div>
                             </td>
                         </tr>
 
@@ -1173,6 +1173,7 @@ export class RestModelBase&lt;T&gt; extends RestRoute implements IRestModel&lt;T
   getPlain(removeIngoredFields &#x3D; false): T {
     const plain: any &#x3D; {};
     Object.assign(plain, this);
+    delete plain._base;
 
     if (removeIngoredFields) {
       // JsonIgnore

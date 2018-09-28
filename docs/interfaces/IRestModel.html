@@ -721,6 +721,7 @@ export class RestModelBase&lt;T&gt; extends RestRoute implements IRestModel&lt;T
   getPlain(removeIngoredFields &#x3D; false): T {
     const plain: any &#x3D; {};
     Object.assign(plain, this);
+    delete plain._base;
 
     if (removeIngoredFields) {
       // JsonIgnore
