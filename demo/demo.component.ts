@@ -80,7 +80,7 @@ export class DemoComponent {
       .subscribe(posts => {
         this.posts = posts;
 
-        posts[0].put().subscribe();
+        // posts[0].put().subscribe();
       });
   }
 
@@ -89,6 +89,7 @@ export class DemoComponent {
       .getList<Comment>()
       .subscribe(comments => {
         this.comments = comments;
+        debugger;
       });
   }
 }

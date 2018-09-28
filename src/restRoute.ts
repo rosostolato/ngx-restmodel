@@ -13,7 +13,7 @@ export class RestRoute {
     }
   }
 
-  protected createHttpRequest(req: HttpRequest<any>) {
+  protected _createHttpRequest(req: HttpRequest<any>) {
     // pass through request interceptor
     req = this._base.requestInterceptor(req);
 
@@ -29,20 +29,20 @@ export class RestRoute {
     );
   }
 
-  private createRouteHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
-    const url = this.getFullPath(method === 'GET' ? id_data : null);
-    const headers = new HttpHeaders(this.getDefaultHeaders());
+  private _createRouteHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
+    const url = this._getFullPath(method === 'GET' ? id_data : null);
+    const headers = new HttpHeaders(this._getDefaultHeaders());
 
     const req = new HttpRequest(method, url,
       method === 'POST' ? id_data : null,
       { headers, params }
     );
 
-    return this.createHttpRequest(req);
+    return this._createHttpRequest(req);
   }
 
-  protected makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
-    const model = this.mapModel(method, this._path || this._base.resource.path, data);
+  protected _makeRest<T>(method: HttpMethod, data: any): RestModel<T> {
+    const model = this._mapModel(method, this._path || this._base.resource.path, data);
 
     // create a copy of base class
     const baseCopy = { ...this._base };
@@ -63,21 +63,21 @@ export class RestRoute {
   }
 
   getList<T>(params?: HttpParams): Observable<Array<RestModel<T>>> {
-    return this.createRouteHttpRequest('GET', params)
-      .pipe(map((response: any[]) => response.map(r => this.makeRest<T>(HttpMethod.GET, r))));
+    return this._createRouteHttpRequest('GET', params)
+      .pipe(map((response: any[]) => response.map(r => this._makeRest<T>(HttpMethod.GET, r))));
   }
 
   getOne<T>(id: number, params?: HttpParams): Observable<RestModel<T>> {
-    return this.createRouteHttpRequest('GET', params, id)
-      .pipe(map(response => this.makeRest<T>(HttpMethod.GET, response)));
+    return this._createRouteHttpRequest('GET', params, id)
+      .pipe(map(response => this._makeRest<T>(HttpMethod.GET, response)));
   }
 
   post<T>(data: any, params?: HttpParams): Observable<RestModel<T>> {
-    return this.createRouteHttpRequest('POST', params, data)
-      .pipe(map(response => this.makeRest<T>(HttpMethod.POST, response)));
+    return this._createRouteHttpRequest('POST', params, data)
+      .pipe(map(response => this._makeRest<T>(HttpMethod.POST, response)));
   }
 
-  protected getFullPath(id?: number) {
+  protected _getFullPath(id?: number) {
     let parentUrl = '/';
     addRoute(this._base.resource);
 
@@ -94,7 +94,7 @@ export class RestRoute {
       }
     }
 
-    let baseurl = this.getBaseUrl();
+    let baseurl = this._getBaseUrl();
     if (baseurl.charAt(baseurl.length - 1) === '/') {
       baseurl = baseurl.slice(0, -1);
     }
@@ -109,15 +109,15 @@ export class RestRoute {
 
   // Base
 
-  protected getBaseUrl(): string {
+  protected _getBaseUrl(): string {
     return this._base.getBaseUrl();
   }
 
-  protected getDefaultHeaders(): { [header: string]: string | string[]; } {
+  protected _getDefaultHeaders(): { [header: string]: string | string[]; } {
     return this._base.getDefaultHeaders();
   }
 
-  protected mapModel(method: HttpMethod, path: string, data: any): any {
+  protected _mapModel(method: HttpMethod, path: string, data: any): any {
     return this._base.mapModel(method, path, data);
   }
 }

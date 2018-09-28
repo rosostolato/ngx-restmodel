@@ -12,48 +12,60 @@ export class RestModelBase<T> extends RestRoute {
 
     const thisProto = Object.getPrototypeOf(this);
     let dataProto = Object.getPrototypeOf(data);
-    dataProto = this.unifyPrototype(dataProto);
+    dataProto = this._unifyPrototype(dataProto);
 
-    Object.assign(thisProto, dataProto);
-    Object.setPrototypeOf(this, thisProto);
+    if (dataProto.isPrototypeOf) {
+      dataProto = thisProto;
+    } else {
+      Object.setPrototypeOf(dataProto, thisProto);
+    }
+
+    Object.setPrototypeOf(this, dataProto);
     Object.assign(this, data);
   }
 
-  private unifyPrototype(proto: any) {
+  private _unifyPrototype(proto: any) {
+    if (isObject(proto)) {
+      return proto;
+    }
+
     let out = {...proto}
     recursive(Object.getPrototypeOf(proto));
     return out;
 
     function recursive(p: any) {
-      const names = Object.getOwnPropertyNames(p);
-
-      if (!names.some(v => v === 'isPrototypeOf')) {
+      if (!isObject(p)) {
         out = {...p, ...out}; // out is prefered
         recursive(Object.getPrototypeOf(p))
       }
     }
+
+    function isObject(p: any) {
+      const names = Object.getOwnPropertyNames(p);
+      return names.some(v => v === 'isPrototypeOf');
+    }
   }
 
-  private createModelHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
-    const headers = new HttpHeaders(this.getDefaultHeaders());
-    const url = this.getFullPath();
+  private _createModelHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
+    const headers = new HttpHeaders(this._getDefaultHeaders());
+    const url = this._getFullPath();
 
     const req = new HttpRequest(
       method, url, method === 'PUT' ? data : null,
       { headers, params }
     );
 
-    return this.createHttpRequest(req);
+    return this._createHttpRequest(req);
   }
 
   put(params?: HttpParams): Observable<T> {
-    return this.createModelHttpRequest('PUT', params, this.getPlain())
-      .pipe(map(response => this.makeRest<T>(HttpMethod.PUT, response)));
+    return this._createModelHttpRequest('PUT', params, this.getPlain())
+      .pipe(map(response => this._makeRest<T>(HttpMethod.PUT, response)));
   }
 
   delete(params?: HttpParams): Observable<any> {
-    return this.createModelHttpRequest('DELETE', params)
-      .pipe(map(response => this.makeRest<T>(HttpMethod.PUT, response)));
+    return this._createModelHttpRequest('DELETE', params)
+      .pipe(map(response => this._makeRest<T>(HttpMethod.PUT, response)));
   }
 
   getPlain(): T {
@@ -82,7 +94,6 @@ export class RestModelBase<T> extends RestRoute {
   }
 
   // Base
-
   route(path: string): RestRoute {
     return this._base.route(path);
   }
