@@ -80,7 +80,7 @@ export class DemoComponent {
       .subscribe(posts => {
         this.posts = posts;
 
-        posts[0].put().subscribe();
+        // posts[0].put().subscribe();
       });
   }
 

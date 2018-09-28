@@ -66,15 +66,17 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
     const url = this._getFullPath();
 
     const req = new HttpRequest(
-      method, url, method === HttpMethod.PUT ? this._getData() : null,
+      method, url, method === HttpMethod.PUT ? this._sendData() : null,
       { headers, params }
     );
 
     return this._createHttpRequest(req);
   }
 
-  private _getData() {
-
+  private _sendData() {
+    // TODO: JsonIgnore
+    const data = this.getPlain();
+    return data;
   }
 
   put(params?: HttpParams): Observable<T> {
@@ -103,7 +105,7 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
       'getDefaultHeaders',
       '_createModelHttpRequest',
       '_unifyPrototype',
-      '_getData'
+      '_sendData'
     ];
 
     for (const key of methods) {
