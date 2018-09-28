@@ -46,12 +46,12 @@ export class RestModelBase<T> extends RestRoute {
     }
   }
 
-  private _createModelHttpRequest(method: 'PUT'|'DELETE', params?: HttpParams, data?: any) {
+  private _createModelHttpRequest(method: HttpMethod.PUT|HttpMethod.DELETE, params?: HttpParams, data?: any) {
     const headers = new HttpHeaders(this._getDefaultHeaders());
     const url = this._getFullPath();
 
     const req = new HttpRequest(
-      method, url, method === 'PUT' ? data : null,
+      method, url, method === HttpMethod.PUT ? data : null,
       { headers, params }
     );
 
@@ -59,13 +59,13 @@ export class RestModelBase<T> extends RestRoute {
   }
 
   put(params?: HttpParams): Observable<T> {
-    return this._createModelHttpRequest('PUT', params, this.getPlain())
+    return this._createModelHttpRequest(HttpMethod.PUT, params, this.getPlain())
       .pipe(map(response => this._makeRest<T>(HttpMethod.PUT, response)));
   }
 
   delete(params?: HttpParams): Observable<any> {
-    return this._createModelHttpRequest('DELETE', params)
-      .pipe(map(response => this._makeRest<T>(HttpMethod.PUT, response)));
+    return this._createModelHttpRequest(HttpMethod.DELETE, params)
+      .pipe(map(response => this._makeRest<T>(HttpMethod.DELETE, response)));
   }
 
   getPlain(): T {

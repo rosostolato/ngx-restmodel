@@ -29,12 +29,12 @@ export class RestRoute {
     );
   }
 
-  private _createRouteHttpRequest(method: 'GET'|'POST', params?: HttpParams, id_data?: any) {
-    const url = this._getFullPath(method === 'GET' ? id_data : null);
+  private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
+    const url = this._getFullPath(method === HttpMethod.GET ? id_data : null);
     const headers = new HttpHeaders(this._getDefaultHeaders());
 
     const req = new HttpRequest(method, url,
-      method === 'POST' ? id_data : null,
+      method === HttpMethod.POST ? id_data : null,
       { headers, params }
     );
 
@@ -62,21 +62,23 @@ export class RestRoute {
     return new RestModelBase<T>(baseCopy as any, model) as any;
   }
 
-  getList<T>(params?: HttpParams): Observable<Array<RestModel<T>>> {
-    return this._createRouteHttpRequest('GET', params)
+  // methods
+  getList<T = any>(params?: HttpParams): Observable<Array<RestModel<T>>> {
+    return this._createRouteHttpRequest(HttpMethod.GET, params)
       .pipe(map((response: any[]) => response.map(r => this._makeRest<T>(HttpMethod.GET, r))));
   }
 
-  getOne<T>(id: number, params?: HttpParams): Observable<RestModel<T>> {
-    return this._createRouteHttpRequest('GET', params, id)
+  getOne<T = any>(id: number, params?: HttpParams): Observable<RestModel<T>> {
+    return this._createRouteHttpRequest(HttpMethod.GET, params, id)
       .pipe(map(response => this._makeRest<T>(HttpMethod.GET, response)));
   }
 
-  post<T>(data: any, params?: HttpParams): Observable<RestModel<T>> {
-    return this._createRouteHttpRequest('POST', params, data)
+  post<T = any>(data: any, params?: HttpParams): Observable<RestModel<T>> {
+    return this._createRouteHttpRequest(HttpMethod.POST, params, data)
       .pipe(map(response => this._makeRest<T>(HttpMethod.POST, response)));
   }
 
+  /////////
   protected _getFullPath(id?: number) {
     let parentUrl = '/';
     addRoute(this._base.resource);
@@ -108,7 +110,6 @@ export class RestRoute {
   }
 
   // Base
-
   protected _getBaseUrl(): string {
     return this._base.getBaseUrl();
   }
