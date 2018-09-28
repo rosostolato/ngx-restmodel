@@ -89,7 +89,6 @@ export class DemoComponent {
       .getList<Comment>()
       .subscribe(comments => {
         this.comments = comments;
-        debugger;
       });
   }
 }

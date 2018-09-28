@@ -14,7 +14,7 @@ export class RestModelBase<T> extends RestRoute {
     let dataProto = Object.getPrototypeOf(data);
     dataProto = this._unifyPrototype(dataProto);
 
-    if (dataProto.isPrototypeOf) {
+    if (isObject(dataProto)) {
       dataProto = thisProto;
     } else {
       Object.setPrototypeOf(dataProto, thisProto);
@@ -22,6 +22,11 @@ export class RestModelBase<T> extends RestRoute {
 
     Object.setPrototypeOf(this, dataProto);
     Object.assign(this, data);
+
+    function isObject(p: any) {
+      const names = Object.getOwnPropertyNames(p);
+      return names.some(v => v === 'isPrototypeOf');
+    }
   }
 
   private _unifyPrototype(proto: any) {
@@ -75,14 +80,15 @@ export class RestModelBase<T> extends RestRoute {
 
     const proto = { ...Object.getPrototypeOf(this) };
     const methods = [
-      'delete',
-      'getBaseUrl',
-      'createModelHttpRequest',
-      'getDefaultHeaders',
-      'getFullPath',
-      'getPlain',
+      'route',
       'put',
-      'route'
+      'delete',
+      'getPlain',
+      'getBaseUrl',
+      'getFullPath',
+      'getDefaultHeaders',
+      '_createModelHttpRequest',
+      '_unifyPrototype'
     ];
 
     for (const key of methods) {
