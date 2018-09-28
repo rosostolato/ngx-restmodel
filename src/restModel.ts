@@ -4,7 +4,17 @@ import { RestRoute } from './index';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export class RestModelBase<T> extends RestRoute {
+interface IRestModel<T> {
+  put(params?: HttpParams): Observable<T>;
+
+  delete(params?: HttpParams): Observable<any>;
+
+  getPlain(): T;
+
+  route(path: string): RestRoute;
+}
+
+export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
   id: number;
 
   constructor (_base: IAbstractBase, data: T) {
@@ -51,20 +61,24 @@ export class RestModelBase<T> extends RestRoute {
     }
   }
 
-  private _createModelHttpRequest(method: HttpMethod.PUT|HttpMethod.DELETE, params?: HttpParams, data?: any) {
+  private _createModelHttpRequest(method: HttpMethod.PUT|HttpMethod.DELETE, params?: HttpParams) {
     const headers = new HttpHeaders(this._getDefaultHeaders());
     const url = this._getFullPath();
 
     const req = new HttpRequest(
-      method, url, method === HttpMethod.PUT ? data : null,
+      method, url, method === HttpMethod.PUT ? this._getData() : null,
       { headers, params }
     );
 
     return this._createHttpRequest(req);
   }
 
+  private _getData() {
+
+  }
+
   put(params?: HttpParams): Observable<T> {
-    return this._createModelHttpRequest(HttpMethod.PUT, params, this.getPlain())
+    return this._createModelHttpRequest(HttpMethod.PUT, params)
       .pipe(map(response => this._makeRest<T>(HttpMethod.PUT, response)));
   }
 
@@ -88,7 +102,8 @@ export class RestModelBase<T> extends RestRoute {
       'getFullPath',
       'getDefaultHeaders',
       '_createModelHttpRequest',
-      '_unifyPrototype'
+      '_unifyPrototype',
+      '_getData'
     ];
 
     for (const key of methods) {
@@ -105,4 +120,4 @@ export class RestModelBase<T> extends RestRoute {
   }
 }
 
-export type RestModel<T> = RestModelBase<T> & T;
+export type RestModel<T> = IRestModel<T> & T;
