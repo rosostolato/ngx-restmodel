@@ -87,7 +87,6 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
   getPlain(removeIngoredFields = false): T {
     const plain: any = {};
     Object.assign(plain, this);
-    delete plain._base;
 
     if (removeIngoredFields) {
       // JsonIgnore
@@ -96,8 +95,6 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
           delete plain[key];
         }
       }
-
-      delete plain._jsonIgnore;
     }
 
     const proto = { ...Object.getPrototypeOf(this) };
@@ -110,7 +107,8 @@ export class RestModelBase<T> extends RestRoute implements IRestModel<T> {
       'getFullPath',
       'getDefaultHeaders',
       '_createModelHttpRequest',
-      '_unifyPrototype'
+      '_unifyPrototype',
+      '_jsonIgnore'
     ];
 
     for (const key of methods) {

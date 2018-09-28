@@ -11,6 +11,13 @@ export class RestRoute {
     if (_path) {
       this._path = _path;
     }
+
+    // hide _base
+    const proto = Object.getPrototypeOf(this);
+    proto._base = _base;
+    delete this._base;
+
+    Object.setPrototypeOf(this, proto);
   }
 
   private _createRouteHttpRequest(method: HttpMethod.GET|HttpMethod.POST, params?: HttpParams, id_data?: any) {
